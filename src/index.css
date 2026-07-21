@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,450;0,600;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  --color-parrys-cream: #fff8f3;
+  --color-parrys-terracotta: #c05621;
+  --color-parrys-terracotta-dark: #9c441a;
+  --color-parrys-surface-dim: #e0d9d1;
+  --color-parrys-charcoal: #2d2722;
+  --color-parrys-muted: #6e645e;
+  
+  --radius-custom: 8px;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-parrys-cream);
+    color: var(--color-parrys-charcoal);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    color: var(--color-parrys-charcoal);
+  }
+}
+
+/* Glassmorphism panel for warm theme */
+.glass-panel {
+  background: rgba(255, 248, 243, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(192, 86, 33, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(192, 86, 33, 0.05);
+}
+
+.glass-panel-hover:hover {
+  border-color: rgba(192, 86, 33, 0.35);
+  box-shadow: 0 8px 32px 0 rgba(192, 86, 33, 0.12);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom Spacing and Transitions */
+.btn-transition {
+  transition: all 0.3s ease;
+}
+
+/* Hero curved image shape */
+.hero-mask {
+  border-bottom-left-radius: 12rem;
+}
+
+@media (max-width: 1024px) {
+  .hero-mask {
+    border-bottom-left-radius: 4rem;
+  }
+}
+
+/* Custom Scrollbars to fit the warm cream look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-parrys-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-parrys-surface-dim);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-parrys-terracotta);
+}
+
+/* Helper to hide scrollbars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

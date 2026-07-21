@@ -1,0 +1,54 @@
+# Tasks - Multi-Role Directory Restructure
+
+- [x] Core Setup & Services
+  - [x] Create `src/services/mockDbService.ts` (localStorage state management for products, enquiries, vendors, and orders)
+- [x] Layout Shell Components
+  - [x] Create `src/layouts/PublicLayout.tsx`
+  - [x] Create `src/layouts/VendorLayout.tsx`
+  - [x] Create `src/layouts/AdminLayout.tsx`
+- [x] Public Pages (Client views)
+  - [x] Create `src/pages/public/Home.tsx` (featured grids, marketplace hero banner)
+  - [x] Create `src/pages/public/Products.tsx` (browsable marketplace catalogue with filters)
+  - [x] Create `src/pages/public/Categories.tsx` (category matrix selector)
+  - [x] Create `src/pages/public/ProductDetails.tsx` (product specs sheet and enquiry triggers)
+  - [x] Create `src/pages/public/About.tsx` (company summary)
+  - [x] Create `src/pages/public/Contact.tsx` (vendor/builder registration enquiry forms)
+  - [x] Create `src/pages/public/Brands.tsx` (partner manufacturer details)
+  - [x] Create `src/pages/public/Login.tsx` (glassmorphic sign-in page)
+  - [x] Create `src/pages/public/VendorRegistration.tsx` (supplier onboarding forms)
+- [x] Vendor Portal Pages (Seller actions)
+  - [x] Create `src/pages/vendor/Dashboard.tsx` (vendor sales statistics, order feeds)
+  - [x] Create `src/pages/vendor/Products.tsx` (vendor specific product manager)
+  - [x] Create `src/pages/vendor/Inventory.tsx` (stock quantity update sliders)
+  - [x] Create `src/pages/vendor/Orders.tsx` (purchase order log)
+  - [x] Create `src/pages/vendor/Profile.tsx` (vendor store address & credentials)
+- [x] Admin Portal Pages (Platform control tower)
+  - [x] Create `src/pages/admin/Dashboard.tsx` (marketplace revenue and vendor onboarding volumes)
+  - [x] Create `src/pages/admin/Vendors.tsx` (vendor verification ledger)
+  - [x] Create `src/pages/admin/Products.tsx` (the product approval ledger dashboard)
+  - [x] Create `src/pages/admin/Categories.tsx` (add/remove custom categories)
+  - [x] Create `src/pages/admin/Reports.tsx` (export reports templates)
+- [x] Routing & Integration
+  - [x] Create `src/routes/AppRoutes.tsx` (react-router pathways isolating public storefront)
+  - [x] Rewrite `src/App.tsx` (mount router registry)
+- [x] Cleanups & Verification
+  - [x] Delete redundant ShellLayout files
+  - [x] Verify compiling via `npm run build`
+- [x] E-Parrys Branding Update
+  - [x] Update Layout files (`PublicLayout.tsx`, `VendorLayout.tsx`, `AdminLayout.tsx`)
+  - [x] Update Public Pages (`Home.tsx`, `About.tsx`, `Contact.tsx`, `Brands.tsx`, `Login.tsx`, `VendorRegistration.tsx`, `ProductDetails.tsx`)
+  - [x] Update Components (`ErrorState.tsx`, `DetailModal.tsx`)
+  - [x] Update Admin/Vendor Pages (`Dashboard.tsx`, `Products.tsx`, `Vendors.tsx`)
+  - [x] Validate compilation
+- [x] Remove Build-Mart Suffixes
+  - [x] Update index.html, PublicLayout.tsx, Header.tsx, Sidebar.tsx
+  - [x] Update Home.tsx, About.tsx, Contact.tsx, Brands.tsx
+  - [x] Update Breadcrumb.tsx, DetailModal.tsx, ErrorState.tsx
+  - [x] Verify compiling
+- [x] Premium E-Parrys Redesign (Cream & Terracotta)
+  - [x] Update index.css to load Google Fonts and define custom @theme colors and styles
+  - [x] Rebuild PublicLayout.tsx to fit the new navigation layout, footer, cream color, terracotta accents
+  - [x] Rebuild Home.tsx to include 13 home layout sections (Hero curved mask, FAQs, Stats bar, Testimonials, Categories list, CTA, etc.)
+  - [x] Rebuild public pages (Products.tsx, Categories.tsx, Brands.tsx, About.tsx, Contact.tsx, Login.tsx, VendorRegistration.tsx, ProductDetails.tsx)
+  - [x] Rebuild common components (Breadcrumb, SearchInput, Filters, Pagination, EmptyState, ErrorState, LoadingState)
+  - [x] Verify compiling
