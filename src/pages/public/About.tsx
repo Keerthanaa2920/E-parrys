@@ -17,9 +17,8 @@ export const About: React.FC = () => {
           E-Parrys is an enterprise-grade digital B2B marketplace engineered to streamline material procurement for construction projects. We connect builders directly with wholesale suppliers, providing verified specifications and transparent marketplace rates.
         </p>
       </section>
-
       {/* Grid of Values */}
-      <section className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
         {cards.map((card) => {
           const Icon = card.icon;
           return (
@@ -33,7 +32,7 @@ export const About: React.FC = () => {
           );
         })}
       </section>
-
+/* Grid of Values */
       {/* Quality commitment */}
       <section className="rounded-custom border border-parrys-surface-dim/60 bg-white p-6 md:p-8 space-y-4 max-w-3xl mx-auto text-center shadow-sm">
         <h2 className="text-lg font-bold text-parrys-charcoal font-serif">Our Quality Assurance Commitment</h2>
