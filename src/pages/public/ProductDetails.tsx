@@ -101,18 +101,18 @@ export const ProductDetails: React.FC = () => {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Left Side: Product Specifications */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="rounded-custom border border-parrys-surface-dim/60 bg-white p-6 md:p-8 space-y-6 shadow-sm">
+          <div className="rounded-custom border border-parrys-surface-dim/30 bg-white p-6 md:p-8 space-y-6 shadow-sm">
             <div>
-              <span className="text-[9px] font-bold uppercase tracking-wider text-parrys-muted font-mono">{product.category}</span>
-              <h1 className="text-2xl font-bold tracking-tight text-parrys-charcoal font-serif mt-1">{product.productName}</h1>
+              <span className="text-[9px] font-bold uppercase tracking-widest text-parrys-muted font-mono bg-parrys-cream px-2 py-1 rounded border border-parrys-surface-dim/30">{product.category}</span>
+              <h1 className="text-3xl font-bold tracking-tight text-parrys-charcoal font-serif mt-3">{product.productName}</h1>
               <p className="text-xs text-parrys-muted font-mono mt-1">Listing Ref: {product.id} | SKU: {product.sku}</p>
             </div>
 
-            <div className="border-t border-b border-parrys-surface-dim/40 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="border-t border-b border-parrys-surface-dim/30 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <span className="text-xs text-parrys-muted uppercase block font-semibold">Estimated Price</span>
+                <span className="text-[10px] text-parrys-muted uppercase block font-bold tracking-wider">Estimated Price</span>
                 <div className="flex items-baseline gap-1 mt-1">
-                  <span className="text-2xl font-bold text-parrys-charcoal font-mono">
+                  <span className="text-3xl font-extrabold text-parrys-terracotta font-mono">
                     ₹{product.amount.toLocaleString('en-IN')}
                   </span>
                   <span className="text-xs text-parrys-muted font-bold font-sans">/ {unit}</span>
@@ -120,8 +120,8 @@ export const ProductDetails: React.FC = () => {
               </div>
               
               <div className="flex items-center gap-2">
-                <span className="text-xs text-parrys-muted font-semibold">Availability:</span>
-                <span className={`rounded-custom border px-2.5 py-1 text-xs font-bold uppercase tracking-wider
+                <span className="text-xs text-parrys-muted font-bold">Availability:</span>
+                <span className={`rounded-custom border px-3 py-1 text-xs font-bold uppercase tracking-wider
                   ${product.stockStatus === 'in-stock' ? 'bg-emerald-50 text-emerald-700 border-emerald-500/20' : ''}
                   ${product.stockStatus === 'low-stock' ? 'bg-amber-50 text-amber-700 border-amber-500/20' : ''}
                   ${product.stockStatus === 'out-of-stock' ? 'bg-rose-50 text-rose-700 border-rose-500/20' : ''}
@@ -132,15 +132,15 @@ export const ProductDetails: React.FC = () => {
             </div>
 
             {/* Quick Sourcing / Add to Cart Section */}
-            <div className="bg-parrys-cream/35 border border-parrys-surface-dim/35 p-4 rounded-custom flex flex-col sm:flex-row justify-between items-center gap-4">
-              <div className="text-xs font-bold text-parrys-muted uppercase">
+            <div className="bg-parrys-cream/40 border border-parrys-surface-dim/20 p-5 rounded-custom flex flex-col sm:flex-row justify-between items-center gap-4 shadow-inner">
+              <div className="text-[10px] font-bold text-parrys-charcoal uppercase tracking-wider">
                 Direct Cart Sourcing (Min. {minQty} {unit}s)
               </div>
               <div className="flex items-center gap-3">
-                <div className="flex items-center rounded-custom border border-parrys-surface-dim/60 bg-white p-0.5">
+                <div className="flex items-center rounded-custom border border-parrys-surface-dim/50 bg-white p-1">
                   <button
                     onClick={() => handleDetailQtyChange(detailQty - 1)}
-                    className="px-2.5 py-1 text-slate-500 hover:text-parrys-charcoal disabled:opacity-30 text-xs font-bold cursor-pointer"
+                    className="px-3 py-1 text-slate-500 hover:text-parrys-charcoal disabled:opacity-30 text-xs font-bold cursor-pointer transition-colors"
                     disabled={detailQty <= minQty}
                   >
                     -
@@ -153,7 +153,7 @@ export const ProductDetails: React.FC = () => {
                   />
                   <button
                     onClick={() => handleDetailQtyChange(detailQty + 1)}
-                    className="px-2.5 py-1 text-slate-500 hover:text-parrys-charcoal text-xs font-bold cursor-pointer"
+                    className="px-3 py-1 text-slate-500 hover:text-parrys-charcoal text-xs font-bold cursor-pointer transition-colors"
                   >
                     +
                   </button>
@@ -161,7 +161,7 @@ export const ProductDetails: React.FC = () => {
                 
                 <button
                   onClick={handleAddToCartDetail}
-                  className={`px-6 py-2.5 rounded-custom text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm
+                  className={`px-6 py-3 rounded-custom text-xs font-bold uppercase tracking-widest flex items-center gap-1.5 transition-all duration-300 cursor-pointer shadow-md hover:scale-[1.02]
                     ${detailAdded
                       ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
                       : 'bg-parrys-terracotta hover:bg-parrys-terracotta-dark text-white'
@@ -176,34 +176,34 @@ export const ProductDetails: React.FC = () => {
 
             {/* Technical grid */}
             <div className="space-y-4">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-parrys-muted font-sans">Listing Specifications</h3>
+              <h3 className="text-xs font-extrabold uppercase tracking-widest text-parrys-muted font-sans">Listing Specifications</h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="rounded-custom border border-parrys-surface-dim/30 bg-parrys-cream/35 p-4 space-y-1">
-                  <span className="text-[10px] font-bold text-parrys-muted uppercase flex items-center gap-1.5 font-sans">
+                <div className="rounded-custom border border-parrys-surface-dim/20 bg-[#FAF8F5] p-5 space-y-1.5 shadow-[0_2px_8px_-4px_rgba(169,68,29,0.04)] hover:border-parrys-terracotta/40 transition-all duration-300">
+                  <span className="text-[10px] font-bold text-parrys-muted uppercase flex items-center gap-1.5 font-sans tracking-wider">
                     <FiMapPin className="text-parrys-terracotta" />
-                    <span>Warehouse Yard Location</span>
+                    <span>Warehouse Location</span>
                   </span>
                   <p className="text-xs font-bold text-parrys-charcoal">{product.warehouse}</p>
                 </div>
                 
-                <div className="rounded-custom border border-parrys-surface-dim/30 bg-parrys-cream/35 p-4 space-y-1">
-                  <span className="text-[10px] font-bold text-parrys-muted uppercase flex items-center gap-1.5 font-sans">
+                <div className="rounded-custom border border-parrys-surface-dim/20 bg-[#FAF8F5] p-5 space-y-1.5 shadow-[0_2px_8px_-4px_rgba(169,68,29,0.04)] hover:border-parrys-terracotta/40 transition-all duration-300">
+                  <span className="text-[10px] font-bold text-parrys-muted uppercase flex items-center gap-1.5 font-sans tracking-wider">
                     <FiLayers className="text-parrys-terracotta" />
-                    <span>Active Stock Quantity</span>
+                    <span>Stock Capacity</span>
                   </span>
                   <p className="text-xs font-bold text-parrys-charcoal font-mono">
-                    {product.quantity.toLocaleString('en-IN')} {unit}s available
+                    {product.quantity.toLocaleString('en-IN')} {unit}s
                   </p>
                 </div>
 
-                <div className="rounded-custom border border-parrys-surface-dim/30 bg-parrys-cream/35 p-4 space-y-1">
-                  <span className="text-[10px] font-bold text-parrys-muted uppercase font-sans">Material Specification</span>
+                <div className="rounded-custom border border-parrys-surface-dim/20 bg-[#FAF8F5] p-5 space-y-1.5 shadow-[0_2px_8px_-4px_rgba(169,68,29,0.04)] hover:border-parrys-terracotta/40 transition-all duration-300">
+                  <span className="text-[10px] font-bold text-parrys-muted uppercase font-sans tracking-wider">Material Specification</span>
                   <p className="text-xs font-bold text-parrys-charcoal">{product.specGrade}</p>
                 </div>
 
-                <div className="rounded-custom border border-parrys-surface-dim/30 bg-parrys-cream/35 p-4 space-y-1">
-                  <span className="text-[10px] font-bold text-parrys-muted uppercase font-sans">Vendor Supplier</span>
+                <div className="rounded-custom border border-parrys-surface-dim/20 bg-[#FAF8F5] p-5 space-y-1.5 shadow-[0_2px_8px_-4px_rgba(169,68,29,0.04)] hover:border-parrys-terracotta/40 transition-all duration-300">
+                  <span className="text-[10px] font-bold text-parrys-muted uppercase font-sans tracking-wider">Vendor Partner</span>
                   <p className="text-xs font-bold text-parrys-charcoal">{product.vendorName}</p>
                 </div>
               </div>
@@ -213,17 +213,17 @@ export const ProductDetails: React.FC = () => {
 
         {/* Right Side: Builder Enquiry Quote Form */}
         <div className="space-y-6">
-          <div className="rounded-custom border border-parrys-surface-dim/60 bg-white p-6 space-y-4 shadow-sm">
-            <div className="flex items-center gap-2 text-sm font-bold text-parrys-charcoal font-serif">
+          <div className="rounded-custom border border-parrys-surface-dim/35 bg-white p-6 space-y-5 shadow-sm">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-parrys-charcoal border-b border-parrys-surface-dim/20 pb-3">
               <FiMessageSquare className="h-4.5 w-4.5 text-parrys-terracotta" />
               <span>Submit RFQ / Enquiry</span>
             </div>
             
-            <p className="text-xs text-parrys-muted leading-normal font-semibold">
+            <p className="text-xs text-parrys-muted leading-relaxed font-semibold">
               Enter your project procurement credentials to receive quotes directly from <strong className="text-parrys-charcoal">{product.vendorName}</strong>.
             </p>
 
-            <form onSubmit={handleSubmitEnquiry} className="space-y-3.5">
+            <form onSubmit={handleSubmitEnquiry} className="space-y-4">
               <div className="flex flex-col gap-1">
                 <label className="text-[10px] font-bold uppercase tracking-wider text-parrys-muted">Contact Person</label>
                 <input
@@ -232,7 +232,7 @@ export const ProductDetails: React.FC = () => {
                   value={enqName}
                   onChange={(e) => setEnqName(e.target.value)}
                   placeholder="e.g. Arun Kumar"
-                  className="w-full rounded-custom border border-parrys-surface-dim bg-white px-3 py-2.5 text-xs text-parrys-charcoal placeholder-slate-400 focus:border-parrys-terracotta focus:outline-none font-semibold"
+                  className="w-full rounded-custom border border-parrys-surface-dim/70 bg-white px-3.5 py-2.5 text-xs text-parrys-charcoal placeholder-slate-400 focus:border-parrys-terracotta focus:ring-2 focus:ring-parrys-terracotta/5 focus:outline-none transition-all duration-300 font-semibold"
                 />
               </div>
 
@@ -244,7 +244,7 @@ export const ProductDetails: React.FC = () => {
                   value={enqEmail}
                   onChange={(e) => setEnqEmail(e.target.value)}
                   placeholder="e.g. procurement@eparrys.com"
-                  className="w-full rounded-custom border border-parrys-surface-dim bg-white px-3 py-2.5 text-xs text-parrys-charcoal placeholder-slate-400 focus:border-parrys-terracotta focus:outline-none font-semibold"
+                  className="w-full rounded-custom border border-parrys-surface-dim/70 bg-white px-3.5 py-2.5 text-xs text-parrys-charcoal placeholder-slate-400 focus:border-parrys-terracotta focus:ring-2 focus:ring-parrys-terracotta/5 focus:outline-none transition-all duration-300 font-semibold"
                 />
               </div>
 
@@ -257,7 +257,7 @@ export const ProductDetails: React.FC = () => {
                   value={enqQty}
                   onChange={(e) => setEnqQty(parseInt(e.target.value) || minQty)}
                   placeholder={`Min. ${minQty}`}
-                  className="w-full rounded-custom border border-parrys-surface-dim bg-white px-3 py-2.5 text-xs text-parrys-charcoal placeholder-slate-400 focus:border-parrys-terracotta focus:outline-none font-mono font-bold"
+                  className="w-full rounded-custom border border-parrys-surface-dim/70 bg-white px-3.5 py-2.5 text-xs text-parrys-charcoal placeholder-slate-400 focus:border-parrys-terracotta focus:ring-2 focus:ring-parrys-terracotta/5 focus:outline-none transition-all duration-300 font-mono font-bold"
                 />
               </div>
 
@@ -268,17 +268,17 @@ export const ProductDetails: React.FC = () => {
                   onChange={(e) => setEnqMsg(e.target.value)}
                   rows={4}
                   placeholder="Describe your site delivery schedule, payment terms, or custom grade requests..."
-                  className="w-full rounded-custom border border-parrys-surface-dim bg-white px-3 py-2.5 text-xs text-parrys-charcoal focus:border-parrys-terracotta focus:outline-none resize-none font-semibold"
+                  className="w-full rounded-custom border border-parrys-surface-dim/70 bg-white px-3.5 py-2.5 text-xs text-parrys-charcoal focus:border-parrys-terracotta focus:ring-2 focus:ring-parrys-terracotta/5 focus:outline-none transition-all duration-300 resize-none font-semibold"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={product.stockStatus === 'out-of-stock'}
-                className="flex w-full items-center justify-center gap-1.5 rounded-custom bg-parrys-terracotta py-2.5 text-xs font-bold text-white shadow-lg disabled:opacity-35 disabled:cursor-not-allowed hover:bg-parrys-terracotta-dark transition-all cursor-pointer"
+                className="flex w-full items-center justify-center gap-2 rounded-custom bg-parrys-terracotta py-3.5 text-xs font-bold uppercase tracking-widest text-white shadow-lg shadow-parrys-terracotta/10 disabled:opacity-35 disabled:cursor-not-allowed hover:bg-parrys-terracotta-dark hover:scale-[1.02] transition-all duration-300 cursor-pointer"
               >
-                <FiSend className="h-3.5 w-3.5" />
-                <span>Submit Quote Request</span>
+                <FiSend className="h-4 w-4" />
+                <span>Submit RFQ</span>
               </button>
             </form>
           </div>

@@ -118,43 +118,46 @@ export const PublicLayout: React.FC = () => {
     <div className="flex flex-col min-h-screen bg-parrys-cream text-parrys-charcoal font-sans relative">
       
       {/* Sticky Premium Navbar */}
-      <nav className="sticky top-0 z-40 bg-parrys-cream/90 backdrop-blur-sm border-b border-parrys-surface-dim/30" data-purpose="main-navigation">
+      <nav className="sticky top-0 z-40 bg-parrys-cream/95 backdrop-blur-md border-b border-parrys-surface-dim/20 shadow-[0_2px_20px_-10px_rgba(169,68,29,0.04)]" data-purpose="main-navigation">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between gap-4">
             
             {/* Logo */}
             <div className="shrink-0">
-              <Link to="/" className="flex items-center gap-2 group">
-                <div className="w-8 h-8 text-parrys-terracotta transition-transform group-hover:scale-[1.05] btn-transition">
-                  <Logo size={32} />
+              <Link to="/" className="flex items-center gap-2.5 group">
+                <div className="w-9 h-9 text-parrys-terracotta transition-all duration-300 group-hover:scale-[1.08] group-hover:rotate-3 btn-transition">
+                  <Logo size={36} />
                 </div>
                 <div className="flex flex-col leading-none">
-                  <span className="text-xl font-bold tracking-tighter text-parrys-charcoal font-serif uppercase">
+                  <span className="text-xl font-extrabold tracking-tight text-parrys-charcoal font-serif uppercase tracking-widest">
                     E-Parrys
                   </span>
-                  <span className="text-[8px] tracking-[0.2em] text-parrys-muted font-bold">
-                    CHENNAI'S WHOLESALE HUB
+                  <span className="text-[7.5px] tracking-[0.25em] text-parrys-muted font-bold font-sans uppercase">
+                    Chennai's Wholesale Hub
                   </span>
                 </div>
               </Link>
             </div>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden xl:flex items-center space-x-6 text-sm font-semibold">
+            <nav className="hidden xl:flex items-center space-x-8 text-xs uppercase tracking-wider font-bold">
               {navLinks.map((link) => {
                 const isActive = currentPath === link.path;
                 return (
                   <button
                     key={link.name}
                     onClick={() => handleNavClick(link.path)}
-                    className={`pb-1 font-semibold transition-colors btn-transition cursor-pointer
+                    className={`pb-1 font-bold transition-all duration-300 btn-transition cursor-pointer relative group/item
                       ${isActive 
-                        ? 'text-parrys-terracotta border-b-2 border-parrys-terracotta' 
+                        ? 'text-parrys-terracotta' 
                         : 'text-parrys-muted hover:text-parrys-terracotta'
                       }
                     `}
                   >
-                    {link.name}
+                    <span>{link.name}</span>
+                    <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-parrys-terracotta transition-transform duration-300 origin-left
+                      ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100'}
+                    `} />
                   </button>
                 );
               })}
@@ -162,27 +165,27 @@ export const PublicLayout: React.FC = () => {
 
             {/* Search Input and Cart Badge */}
             <div className="flex-1 max-w-md hidden md:block">
-              <form onSubmit={handleSearch} className="relative flex items-center bg-white rounded-custom border border-parrys-surface-dim/70 px-3 py-1.5 shadow-sm">
-                <FiSearch className="text-slate-400 mr-2 shrink-0 h-4 w-4" />
+              <form onSubmit={handleSearch} className="relative flex items-center bg-white rounded-custom border border-parrys-surface-dim/40 px-3.5 py-2.5 shadow-[0_2px_8px_-4px_rgba(169,68,29,0.06)] focus-within:border-parrys-terracotta/50 focus-within:ring-2 focus-within:ring-parrys-terracotta/5 transition-all duration-300">
+                <FiSearch className="text-slate-400 mr-2.5 shrink-0 h-4.5 w-4.5" />
                 <input
                   type="text"
-                  placeholder="Search products..."
+                  placeholder="Search materials, cement, steel..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-transparent border-0 focus:outline-none focus:ring-0 text-xs text-parrys-charcoal placeholder-slate-400"
+                  className="w-full bg-transparent border-0 focus:outline-none focus:ring-0 text-xs font-semibold text-parrys-charcoal placeholder-slate-400"
                 />
               </form>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               {/* Cart Button */}
               <button 
                 onClick={() => setCartOpen(true)}
-                className="relative flex h-10 w-10 items-center justify-center rounded-custom border border-parrys-surface-dim bg-white text-parrys-charcoal hover:bg-parrys-cream hover:border-parrys-terracotta transition-colors btn-transition cursor-pointer shadow-sm"
+                className="relative flex h-11 w-11 items-center justify-center rounded-custom border border-parrys-surface-dim/50 bg-white text-parrys-charcoal hover:bg-parrys-cream hover:border-parrys-terracotta hover:scale-105 transition-all duration-300 btn-transition cursor-pointer shadow-[0_2px_8px_-4px_rgba(169,68,29,0.08)]"
               >
-                <FiShoppingCart className="h-4.5 w-4.5" />
+                <FiShoppingCart className="h-5 w-5" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-parrys-terracotta text-[10px] font-bold text-white shadow-sm font-mono animate-pulse">
+                  <span className="absolute -top-1.5 -right-1.5 flex h-5.5 w-5.5 items-center justify-center rounded-full bg-parrys-terracotta text-[9px] font-extrabold text-white shadow-md font-mono animate-bounce">
                     {cartCount}
                   </span>
                 )}
@@ -190,7 +193,7 @@ export const PublicLayout: React.FC = () => {
 
               <Link
                 to="/login"
-                className="hidden lg:flex items-center gap-1.5 px-3 py-2 text-xs font-bold uppercase tracking-wider text-parrys-muted hover:text-parrys-terracotta transition-colors"
+                className="hidden lg:flex items-center gap-2 px-4 py-2.5 rounded-custom border border-parrys-surface-dim/40 bg-white hover:border-parrys-terracotta hover:bg-parrys-cream text-xs font-bold uppercase tracking-wider text-parrys-muted hover:text-parrys-terracotta transition-all duration-305 shadow-sm"
               >
                 <FiUser className="h-4 w-4" />
                 <span>Customer Login</span>
@@ -199,9 +202,9 @@ export const PublicLayout: React.FC = () => {
               {/* Mobile hamburger menu */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="flex xl:hidden h-10 w-10 items-center justify-center rounded-custom border border-parrys-surface-dim text-parrys-muted hover:bg-white focus:outline-none cursor-pointer"
+                className="flex xl:hidden h-11 w-11 items-center justify-center rounded-custom border border-parrys-surface-dim text-parrys-muted hover:bg-white focus:outline-none cursor-pointer"
               >
-                {mobileMenuOpen ? <FiX className="h-5 w-5" /> : <FiMenu className="h-5 w-5" />}
+                {mobileMenuOpen ? <FiX className="h-5.5 w-5.5" /> : <FiMenu className="h-5.5 w-5.5" />}
               </button>
             </div>
 

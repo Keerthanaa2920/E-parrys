@@ -112,14 +112,14 @@ export const Home: React.FC = () => {
               <div className="flex flex-wrap gap-4">
                 <Link
                   to="/products"
-                  className="bg-parrys-terracotta text-white px-8 py-4 rounded-custom font-semibold text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-parrys-terracotta-dark btn-transition shadow-lg shadow-parrys-terracotta/10"
+                  className="bg-parrys-terracotta text-white px-8 py-4 rounded-custom font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-parrys-terracotta-dark hover:scale-[1.03] btn-transition shadow-lg shadow-parrys-terracotta/15"
                 >
                   <span>Browse Catalogue</span>
                   <FiArrowRight className="h-4.5 w-4.5" />
                 </Link>
                 <Link
                   to="/vendor-registration"
-                  className="border border-parrys-surface-dim bg-white hover:bg-parrys-cream text-parrys-charcoal px-8 py-4 rounded-custom font-semibold text-xs uppercase tracking-wider flex items-center gap-2 btn-transition"
+                  className="border border-parrys-surface-dim bg-white hover:bg-parrys-cream hover:border-parrys-terracotta/60 text-parrys-charcoal px-8 py-4 rounded-custom font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:scale-[1.03] btn-transition shadow-sm"
                 >
                   <span>Become a Supplier</span>
                 </Link>
@@ -160,15 +160,15 @@ export const Home: React.FC = () => {
               <Link
                 key={cat.name}
                 to={`/products?category=${encodeURIComponent(cat.name)}`}
-                className="rounded-custom border border-parrys-surface-dim/60 bg-white p-4 text-center transition-all duration-300 hover:border-parrys-terracotta hover:bg-parrys-cream group shadow-sm hover:shadow"
+                className="rounded-custom border border-parrys-surface-dim/40 bg-white p-5 text-center transition-all duration-350 hover:border-parrys-terracotta hover:bg-parrys-cream/40 hover:-translate-y-1 block group shadow-sm hover:shadow-md"
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-parrys-cream text-parrys-muted mx-auto group-hover:text-white group-hover:bg-parrys-terracotta transition-all duration-300">
-                  <Icon className="h-4.5 w-4.5" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-parrys-cream text-parrys-muted mx-auto group-hover:text-white group-hover:bg-parrys-terracotta transition-all duration-300 shadow-sm">
+                  <Icon className="h-5 w-5" />
                 </div>
-                <span className="mt-3 block text-xs font-bold text-parrys-charcoal truncate">
+                <span className="mt-3.5 block text-xs font-bold uppercase tracking-wider text-parrys-charcoal truncate">
                   {cat.name}
                 </span>
-                <span className="text-[9px] text-parrys-muted block truncate mt-0.5">
+                <span className="text-[9px] text-parrys-muted block truncate mt-1 font-medium">
                   {cat.desc}
                 </span>
               </Link>
@@ -196,29 +196,29 @@ export const Home: React.FC = () => {
               <Link
                 key={prd.id}
                 to={`/product/${prd.id}`}
-                className="flex flex-col rounded-custom border border-parrys-surface-dim/50 bg-parrys-cream/35 p-5 justify-between hover:border-parrys-terracotta transition-all duration-300 hover:shadow-lg group"
+                className="flex flex-col rounded-custom p-6 justify-between luxury-card group shadow-[0_4px_20px_-10px_rgba(169,68,29,0.05)]"
               >
-                <div className="space-y-3.5">
-                  <div className="flex items-center justify-between text-[9px] font-bold text-parrys-muted uppercase">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between text-[9px] font-bold text-parrys-muted uppercase tracking-widest">
                     <span>{prd.category}</span>
-                    <span className="font-mono text-parrys-terracotta">{prd.sku}</span>
+                    <span className="font-mono text-parrys-terracotta bg-parrys-cream px-2 py-0.5 rounded border border-parrys-surface-dim/30">{prd.sku}</span>
                   </div>
                   
-                  <h3 className="text-sm font-semibold text-parrys-charcoal group-hover:text-parrys-terracotta transition leading-snug font-serif">
+                  <h3 className="text-sm font-bold text-parrys-charcoal group-hover:text-parrys-terracotta transition duration-300 leading-snug font-serif">
                     {prd.productName}
                   </h3>
                   
-                  <div className="flex items-center justify-between text-xs text-parrys-muted pt-2 border-t border-parrys-surface-dim/20">
+                  <div className="flex items-center justify-between text-xs text-parrys-muted pt-2.5 border-t border-parrys-surface-dim/20">
                     <span>Vendor:</span>
-                    <span className="font-semibold text-parrys-charcoal truncate max-w-[130px]">{prd.vendorName}</span>
+                    <span className="font-bold text-parrys-charcoal truncate max-w-[130px]">{prd.vendorName}</span>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between mt-4 pt-3 border-t border-parrys-surface-dim/20">
-                  <span className="text-sm font-bold font-mono text-parrys-charcoal">
+                <div className="flex items-center justify-between mt-4 pt-3.5 border-t border-parrys-surface-dim/20">
+                  <span className="text-sm font-extrabold font-mono text-parrys-terracotta">
                     ₹{prd.amount.toLocaleString('en-IN')}
                   </span>
-                  <span className="text-[10px] text-parrys-muted font-medium">
+                  <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-500/10">
                     {prd.warehouse}
                   </span>
                 </div>
@@ -323,27 +323,31 @@ export const Home: React.FC = () => {
             <Link
               key={prd.id}
               to={`/product/${prd.id}`}
-              className="flex flex-col rounded-custom border border-parrys-surface-dim/60 bg-white p-5 justify-between hover:border-parrys-terracotta transition-all duration-300 hover:shadow-lg group"
+              className="flex flex-col rounded-custom p-6 justify-between luxury-card group shadow-[0_4px_20px_-10px_rgba(169,68,29,0.05)]"
             >
-              <div className="space-y-3.5">
-                <div className="flex items-center justify-between text-[9px] font-bold text-parrys-muted uppercase">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between text-[9px] font-bold text-parrys-muted uppercase tracking-widest">
                   <span>{prd.category}</span>
-                  <span className="font-mono text-parrys-terracotta">{prd.sku}</span>
+                  <span className="font-mono text-parrys-terracotta bg-parrys-cream px-2 py-0.5 rounded border border-parrys-surface-dim/30">{prd.sku}</span>
                 </div>
                 
-                <h3 className="text-sm font-semibold text-parrys-charcoal group-hover:text-parrys-terracotta transition leading-snug font-serif">
+                <h3 className="text-sm font-bold text-parrys-charcoal group-hover:text-parrys-terracotta transition duration-300 leading-snug font-serif">
                   {prd.productName}
                 </h3>
                 
-                <div className="flex items-center justify-between text-xs text-parrys-muted pt-2 border-t border-parrys-surface-dim/20">
+                <div className="flex items-center justify-between text-xs text-parrys-muted pt-2.5 border-t border-parrys-surface-dim/20">
                   <span>Supplier:</span>
-                  <span className="font-semibold text-parrys-charcoal truncate max-w-[130px]">{prd.vendorName}</span>
+                  <span className="font-bold text-parrys-charcoal truncate max-w-[130px]">{prd.vendorName}</span>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between mt-4 pt-3 border-t border-parrys-surface-dim/20 font-mono font-bold text-slate-700 text-sm">
-                <span>₹{prd.amount.toLocaleString('en-IN')}</span>
-                <span className="text-[10px] text-slate-500 font-sans font-medium">{prd.warehouse}</span>
+              <div className="flex items-center justify-between mt-4 pt-3.5 border-t border-parrys-surface-dim/20">
+                <span className="text-sm font-extrabold font-mono text-parrys-terracotta">
+                  ₹{prd.amount.toLocaleString('en-IN')}
+                </span>
+                <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-500/10">
+                  {prd.warehouse}
+                </span>
               </div>
             </Link>
           ))}
@@ -358,33 +362,42 @@ export const Home: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="rounded-custom border border-parrys-surface-dim bg-white p-6 space-y-4">
+          <div className="rounded-custom border border-parrys-surface-dim/40 bg-white p-8 space-y-5 shadow-sm hover:shadow-md hover:border-parrys-terracotta/40 hover:-translate-y-0.5 transition-all duration-300">
             <p className="text-xs text-parrys-muted italic leading-relaxed">
               "Sourcing OPC 53 cement and TMT steel rebars through E-Parrys has saved our procurement division significant overheads on our Chennai metro sub-contracts. Direct mill invoicing was flawless."
             </p>
-            <div className="border-t border-parrys-surface-dim/40 pt-3">
-              <h4 className="text-xs font-bold text-parrys-charcoal font-serif">Ramanathan K.</h4>
-              <p className="text-[9px] text-parrys-muted font-bold uppercase tracking-wider mt-0.5">Procurement Director, L&T Infrastructure</p>
+            <div className="border-t border-parrys-surface-dim/40 pt-4 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-parrys-cream text-parrys-terracotta font-serif font-extrabold flex items-center justify-center border border-parrys-surface-dim/60">R</div>
+              <div>
+                <h4 className="text-xs font-bold text-parrys-charcoal font-serif">Ramanathan K.</h4>
+                <p className="text-[8px] text-parrys-muted font-bold uppercase tracking-wider mt-0.5">Procurement Director, L&T Infrastructure</p>
+              </div>
             </div>
           </div>
 
-          <div className="rounded-custom border border-parrys-surface-dim bg-white p-6 space-y-4">
+          <div className="rounded-custom border border-parrys-surface-dim/40 bg-white p-8 space-y-5 shadow-sm hover:shadow-md hover:border-parrys-terracotta/40 hover:-translate-y-0.5 transition-all duration-300">
             <p className="text-xs text-parrys-muted italic leading-relaxed">
               "Being able to submit bulk sand and concrete aggregates RFQs and matching with verified suppliers instantly resolved our material lags. The laboratory test report checks are highly valuable."
             </p>
-            <div className="border-t border-parrys-surface-dim/40 pt-3">
-              <h4 className="text-xs font-bold text-parrys-charcoal font-serif">Suresh Kumar</h4>
-              <p className="text-[9px] text-parrys-muted font-bold uppercase tracking-wider mt-0.5">Project Manager, Apex Housing Group</p>
+            <div className="border-t border-parrys-surface-dim/40 pt-4 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-parrys-cream text-parrys-terracotta font-serif font-extrabold flex items-center justify-center border border-parrys-surface-dim/60">S</div>
+              <div>
+                <h4 className="text-xs font-bold text-parrys-charcoal font-serif">Suresh Kumar</h4>
+                <p className="text-[8px] text-parrys-muted font-bold uppercase tracking-wider mt-0.5">Project Manager, Apex Housing Group</p>
+              </div>
             </div>
           </div>
 
-          <div className="rounded-custom border border-parrys-surface-dim bg-white p-6 space-y-4">
+          <div className="rounded-custom border border-parrys-surface-dim/40 bg-white p-8 space-y-5 shadow-sm hover:shadow-md hover:border-parrys-terracotta/40 hover:-translate-y-0.5 transition-all duration-300">
             <p className="text-xs text-parrys-muted italic leading-relaxed">
               "GST invoice validations, direct delivery coordination, and full price transparency. E-Parrys has established the benchmark standards for building material procurement in India."
             </p>
-            <div className="border-t border-parrys-surface-dim/40 pt-3">
-              <h4 className="text-xs font-bold text-parrys-charcoal font-serif">Priya Sen</h4>
-              <p className="text-[9px] text-parrys-muted font-bold uppercase tracking-wider mt-0.5">Operations Head, GMR Airport Logistics</p>
+            <div className="border-t border-parrys-surface-dim/40 pt-4 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-parrys-cream text-parrys-terracotta font-serif font-extrabold flex items-center justify-center border border-parrys-surface-dim/60">P</div>
+              <div>
+                <h4 className="text-xs font-bold text-parrys-charcoal font-serif">Priya Sen</h4>
+                <p className="text-[8px] text-parrys-muted font-bold uppercase tracking-wider mt-0.5">Operations Head, GMR Airport Logistics</p>
+              </div>
             </div>
           </div>
         </div>
