@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { mockDbService } from '../../services/mockDbService';
 import type { IMarketplaceItem } from '../../types/dashboard';
-import { FiPlus, FiInbox, FiCheckCircle, FiClock, FiX, FiCheck } from 'react-icons/fi';
+import { FiPlus, FiInbox, FiCheckCircle, FiX } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const Products: React.FC = () => {

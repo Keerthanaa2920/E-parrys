@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiPlus, FiTrash2, FiFolder, FiCheckCircle } from 'react-icons/fi';
+import { FiPlus, FiTrash2, FiCheckCircle } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const Categories: React.FC = () => {

@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { 
   FiGrid, FiUsers, FiCheckSquare, FiFolder, 
+<<<<<<< HEAD
   FiPieChart, FiArrowLeft, FiMenu,
   FiChevronDown, FiRefreshCw, FiLogOut
+=======
+  FiPieChart, FiArrowLeft, FiMenu, 
+  FiChevronDown, FiRefreshCw, FiLogOut 
+>>>>>>> 3132dde6d60ab63e8f48aa88cc9226fc3d62257f
 } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 

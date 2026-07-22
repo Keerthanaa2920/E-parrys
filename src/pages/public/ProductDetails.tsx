@@ -1,20 +1,35 @@
 import React, { useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { mockDbService } from '../../services/mockDbService';
-import { FiArrowLeft, FiCheckCircle, FiInfo, FiLayers, FiMapPin, FiMessageSquare, FiSend } from 'react-icons/fi';
+import { useCart } from '../../context/CartContext';
+import { 
+  FiArrowLeft, FiCheckCircle, FiInfo, FiLayers, FiMapPin, 
+  FiMessageSquare, FiSend, FiShoppingBag 
+} from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const ProductDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [enqName, setEnqName] = useState('');
-  const [enqEmail, setEnqEmail] = useState('');
-  const [enqQty, setEnqQty] = useState(10);
-  const [enqMsg, setEnqMsg] = useState('');
-  const [successToast, setSuccessToast] = useState(false);
-
+  const { addToCart } = useCart();
+  
   const product = useMemo(() => {
     return mockDbService.getProducts().find(p => p.id === id);
   }, [id]);
+
+  const minQty = product ? ((product as any).minQty || 10) : 10;
+  const unit = product ? ((product as any).unit || 'unit') : 'unit';
+
+  // RFQ Enquiry form states
+  const [enqName, setEnqName] = useState('');
+  const [enqEmail, setEnqEmail] = useState('');
+  const [enqQty, setEnqQty] = useState(minQty);
+  const [enqMsg, setEnqMsg] = useState('');
+  
+  // Direct Add to Cart states
+  const [detailQty, setDetailQty] = useState(minQty);
+  const [detailAdded, setDetailAdded] = useState(false);
+  const [successToast, setSuccessToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   if (!product) {
     return (
@@ -28,6 +43,25 @@ export const ProductDetails: React.FC = () => {
       </div>
     );
   }
+
+  const handleDetailQtyChange = (val: number) => {
+    setDetailQty(Math.max(minQty, val));
+  };
+
+  const handleAddToCartDetail = () => {
+    addToCart(product, detailQty);
+    setDetailAdded(true);
+    setToastMessage(`Added ${detailQty} ${unit}s of ${product.productName} to your cart.`);
+    setSuccessToast(true);
+    
+    setTimeout(() => {
+      setDetailAdded(false);
+    }, 2000);
+
+    setTimeout(() => {
+      setSuccessToast(false);
+    }, 4000);
+  };
 
   const handleSubmitEnquiry = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,11 +77,14 @@ export const ProductDetails: React.FC = () => {
       message: enqMsg || `Requesting details for ${product.productName}.`
     });
 
+    setToastMessage(`Direct Enquiry Quote Request submitted successfully to ${product.vendorName}.`);
     setSuccessToast(true);
+    
+    // Clear form
     setEnqName('');
     setEnqEmail('');
     setEnqMsg('');
-    setEnqQty(10);
+    setEnqQty(minQty);
 
     setTimeout(() => {
       setSuccessToast(false);
@@ -66,62 +103,108 @@ export const ProductDetails: React.FC = () => {
         <div className="lg:col-span-2 space-y-6">
           <div className="rounded-custom border border-parrys-surface-dim/60 bg-white p-6 md:p-8 space-y-6 shadow-sm">
             <div>
-              <span className="text-[9px] font-bold uppercase tracking-wider text-parrys-muted">{product.category}</span>
+              <span className="text-[9px] font-bold uppercase tracking-wider text-parrys-muted font-mono">{product.category}</span>
               <h1 className="text-2xl font-bold tracking-tight text-parrys-charcoal font-serif mt-1">{product.productName}</h1>
               <p className="text-xs text-parrys-muted font-mono mt-1">Listing Ref: {product.id} | SKU: {product.sku}</p>
             </div>
 
             <div className="border-t border-b border-parrys-surface-dim/40 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <span className="text-xs text-parrys-muted uppercase block">Estimated Price</span>
-                <span className="text-2xl font-bold text-parrys-charcoal font-mono">
-                  ₹{product.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
-                </span>
+                <span className="text-xs text-parrys-muted uppercase block font-semibold">Estimated Price</span>
+                <div className="flex items-baseline gap-1 mt-1">
+                  <span className="text-2xl font-bold text-parrys-charcoal font-mono">
+                    ₹{product.amount.toLocaleString('en-IN')}
+                  </span>
+                  <span className="text-xs text-parrys-muted font-bold font-sans">/ {unit}</span>
+                </div>
               </div>
               
               <div className="flex items-center gap-2">
-                <span className="text-xs text-parrys-muted">Availability:</span>
+                <span className="text-xs text-parrys-muted font-semibold">Availability:</span>
                 <span className={`rounded-custom border px-2.5 py-1 text-xs font-bold uppercase tracking-wider
-                  ${product.stockStatus === 'in-stock' ? 'bg-emerald-55/20 text-emerald-700 border-emerald-500/20' : ''}
-                  ${product.stockStatus === 'low-stock' ? 'bg-amber-55/20 text-amber-700 border-amber-500/20' : ''}
-                  ${product.stockStatus === 'out-of-stock' ? 'bg-rose-55/20 text-rose-700 border-rose-500/20' : ''}
+                  ${product.stockStatus === 'in-stock' ? 'bg-emerald-50 text-emerald-700 border-emerald-500/20' : ''}
+                  ${product.stockStatus === 'low-stock' ? 'bg-amber-50 text-amber-700 border-amber-500/20' : ''}
+                  ${product.stockStatus === 'out-of-stock' ? 'bg-rose-50 text-rose-700 border-rose-500/20' : ''}
                 `}>
                   {product.stockStatus.replace('-', ' ')}
                 </span>
               </div>
             </div>
 
+            {/* Quick Sourcing / Add to Cart Section */}
+            <div className="bg-parrys-cream/35 border border-parrys-surface-dim/35 p-4 rounded-custom flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div className="text-xs font-bold text-parrys-muted uppercase">
+                Direct Cart Sourcing (Min. {minQty} {unit}s)
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center rounded-custom border border-parrys-surface-dim/60 bg-white p-0.5">
+                  <button
+                    onClick={() => handleDetailQtyChange(detailQty - 1)}
+                    className="px-2.5 py-1 text-slate-500 hover:text-parrys-charcoal disabled:opacity-30 text-xs font-bold cursor-pointer"
+                    disabled={detailQty <= minQty}
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    value={detailQty}
+                    onChange={(e) => handleDetailQtyChange(parseInt(e.target.value) || minQty)}
+                    className="w-12 text-center bg-transparent border-0 text-xs font-bold font-mono focus:ring-0 p-0"
+                  />
+                  <button
+                    onClick={() => handleDetailQtyChange(detailQty + 1)}
+                    className="px-2.5 py-1 text-slate-500 hover:text-parrys-charcoal text-xs font-bold cursor-pointer"
+                  >
+                    +
+                  </button>
+                </div>
+                
+                <button
+                  onClick={handleAddToCartDetail}
+                  className={`px-6 py-2.5 rounded-custom text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm
+                    ${detailAdded
+                      ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                      : 'bg-parrys-terracotta hover:bg-parrys-terracotta-dark text-white'
+                    }
+                  `}
+                >
+                  <FiShoppingBag />
+                  <span>{detailAdded ? 'Added ✓' : 'Add to Cart'}</span>
+                </button>
+              </div>
+            </div>
+
             {/* Technical grid */}
             <div className="space-y-4">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-parrys-muted">Listing Specifications</h3>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-parrys-muted font-sans">Listing Specifications</h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="rounded-custom border border-parrys-surface-dim/30 bg-parrys-cream/35 p-4 space-y-1">
-                  <span className="text-[10px] font-bold text-parrys-muted uppercase flex items-center gap-1.5">
+                  <span className="text-[10px] font-bold text-parrys-muted uppercase flex items-center gap-1.5 font-sans">
                     <FiMapPin className="text-parrys-terracotta" />
                     <span>Warehouse Yard Location</span>
                   </span>
-                  <p className="text-xs font-semibold text-parrys-charcoal">{product.warehouse}</p>
+                  <p className="text-xs font-bold text-parrys-charcoal">{product.warehouse}</p>
                 </div>
                 
                 <div className="rounded-custom border border-parrys-surface-dim/30 bg-parrys-cream/35 p-4 space-y-1">
-                  <span className="text-[10px] font-bold text-parrys-muted uppercase flex items-center gap-1.5">
+                  <span className="text-[10px] font-bold text-parrys-muted uppercase flex items-center gap-1.5 font-sans">
                     <FiLayers className="text-parrys-terracotta" />
                     <span>Active Stock Quantity</span>
                   </span>
-                  <p className="text-xs font-semibold text-parrys-charcoal font-mono">
-                    {product.quantity.toLocaleString('en-IN')} units available
+                  <p className="text-xs font-bold text-parrys-charcoal font-mono">
+                    {product.quantity.toLocaleString('en-IN')} {unit}s available
                   </p>
                 </div>
 
                 <div className="rounded-custom border border-parrys-surface-dim/30 bg-parrys-cream/35 p-4 space-y-1">
-                  <span className="text-[10px] font-bold text-parrys-muted uppercase">Material Specification</span>
-                  <p className="text-xs font-semibold text-parrys-charcoal">{product.specGrade}</p>
+                  <span className="text-[10px] font-bold text-parrys-muted uppercase font-sans">Material Specification</span>
+                  <p className="text-xs font-bold text-parrys-charcoal">{product.specGrade}</p>
                 </div>
 
                 <div className="rounded-custom border border-parrys-surface-dim/30 bg-parrys-cream/35 p-4 space-y-1">
-                  <span className="text-[10px] font-bold text-parrys-muted uppercase">Vendor Supplier</span>
-                  <p className="text-xs font-semibold text-parrys-charcoal">{product.vendorName}</p>
+                  <span className="text-[10px] font-bold text-parrys-muted uppercase font-sans">Vendor Supplier</span>
+                  <p className="text-xs font-bold text-parrys-charcoal">{product.vendorName}</p>
                 </div>
               </div>
             </div>
@@ -136,7 +219,7 @@ export const ProductDetails: React.FC = () => {
               <span>Submit RFQ / Enquiry</span>
             </div>
             
-            <p className="text-xs text-parrys-muted leading-normal">
+            <p className="text-xs text-parrys-muted leading-normal font-semibold">
               Enter your project procurement credentials to receive quotes directly from <strong className="text-parrys-charcoal">{product.vendorName}</strong>.
             </p>
 
@@ -149,7 +232,7 @@ export const ProductDetails: React.FC = () => {
                   value={enqName}
                   onChange={(e) => setEnqName(e.target.value)}
                   placeholder="e.g. Arun Kumar"
-                  className="w-full rounded-custom border border-parrys-surface-dim bg-white px-3 py-2.5 text-xs text-parrys-charcoal placeholder-slate-400 focus:border-parrys-terracotta focus:outline-none"
+                  className="w-full rounded-custom border border-parrys-surface-dim bg-white px-3 py-2.5 text-xs text-parrys-charcoal placeholder-slate-400 focus:border-parrys-terracotta focus:outline-none font-semibold"
                 />
               </div>
 
@@ -161,20 +244,20 @@ export const ProductDetails: React.FC = () => {
                   value={enqEmail}
                   onChange={(e) => setEnqEmail(e.target.value)}
                   placeholder="e.g. procurement@eparrys.com"
-                  className="w-full rounded-custom border border-parrys-surface-dim bg-white px-3 py-2.5 text-xs text-parrys-charcoal placeholder-slate-400 focus:border-parrys-terracotta focus:outline-none"
+                  className="w-full rounded-custom border border-parrys-surface-dim bg-white px-3 py-2.5 text-xs text-parrys-charcoal placeholder-slate-400 focus:border-parrys-terracotta focus:outline-none font-semibold"
                 />
               </div>
 
               <div className="flex flex-col gap-1">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-parrys-muted">Requested Volume</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-parrys-muted">Requested Volume ({unit}s)</label>
                 <input
                   type="number"
                   required
-                  min={1}
+                  min={minQty}
                   value={enqQty}
-                  onChange={(e) => setEnqQty(parseInt(e.target.value))}
-                  placeholder="e.g. 50"
-                  className="w-full rounded-custom border border-parrys-surface-dim bg-white px-3 py-2.5 text-xs text-parrys-charcoal placeholder-slate-400 focus:border-parrys-terracotta focus:outline-none"
+                  onChange={(e) => setEnqQty(parseInt(e.target.value) || minQty)}
+                  placeholder={`Min. ${minQty}`}
+                  className="w-full rounded-custom border border-parrys-surface-dim bg-white px-3 py-2.5 text-xs text-parrys-charcoal placeholder-slate-400 focus:border-parrys-terracotta focus:outline-none font-mono font-bold"
                 />
               </div>
 
@@ -185,14 +268,14 @@ export const ProductDetails: React.FC = () => {
                   onChange={(e) => setEnqMsg(e.target.value)}
                   rows={4}
                   placeholder="Describe your site delivery schedule, payment terms, or custom grade requests..."
-                  className="w-full rounded-custom border border-parrys-surface-dim bg-white px-3 py-2.5 text-xs text-parrys-charcoal focus:border-parrys-terracotta focus:outline-none resize-none"
+                  className="w-full rounded-custom border border-parrys-surface-dim bg-white px-3 py-2.5 text-xs text-parrys-charcoal focus:border-parrys-terracotta focus:outline-none resize-none font-semibold"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={product.stockStatus === 'out-of-stock'}
-                className="flex w-full items-center justify-center gap-1.5 rounded-custom bg-parrys-terracotta py-2.5 text-xs font-bold text-white shadow-lg disabled:opacity-35 disabled:cursor-not-allowed hover:from-cyan-500 hover:to-indigo-550 transition-all"
+                className="flex w-full items-center justify-center gap-1.5 rounded-custom bg-parrys-terracotta py-2.5 text-xs font-bold text-white shadow-lg disabled:opacity-35 disabled:cursor-not-allowed hover:bg-parrys-terracotta-dark transition-all cursor-pointer"
               >
                 <FiSend className="h-3.5 w-3.5" />
                 <span>Submit Quote Request</span>
@@ -212,7 +295,7 @@ export const ProductDetails: React.FC = () => {
             className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-custom border border-emerald-500/20 bg-slate-900 px-4 py-3 text-xs font-semibold text-slate-205 shadow-2xl backdrop-blur-md"
           >
             <FiCheckCircle className="h-4.5 w-4.5 text-emerald-400" />
-            <span>Inquiry Quote Request submitted successfully to vendor.</span>
+            <span>{toastMessage}</span>
           </motion.div>
         )}
       </AnimatePresence>

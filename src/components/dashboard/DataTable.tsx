@@ -2,8 +2,7 @@ import React from 'react';
 import type { IMarketplaceItem } from '../../types/dashboard';
 import { 
   FiArrowUp, FiArrowDown, FiEye, 
-  FiTrash2, FiFileText, FiCheckCircle, 
-  FiBox 
+  FiTrash2, FiFileText, FiCheckCircle 
 } from 'react-icons/fi';
 
 interface DataTableProps {

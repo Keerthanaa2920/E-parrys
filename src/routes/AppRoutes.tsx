@@ -15,7 +15,10 @@ import { Brands } from '../pages/public/Brands';
 import { Login } from '../pages/public/Login';
 import { VendorRegistration } from '../pages/public/VendorRegistration';
 
+<<<<<<< HEAD
 // Portals
+=======
+>>>>>>> 3132dde6d60ab63e8f48aa88cc9226fc3d62257f
 import { VendorLayout } from '../layouts/VendorLayout';
 // import { AdminLayout } from '../layouts/AdminLayout';
 
@@ -38,7 +41,6 @@ import { Vendors as AdminVendors } from '../pages/admin/Vendors';
 import { Products as AdminProducts } from '../pages/admin/Products';
 import { Categories as AdminCategories } from '../pages/admin/Categories';
 import { Reports as AdminReports } from '../pages/admin/Reports';
-*/
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -70,8 +72,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/vendor/settings" element={<VendorSettings />} />
       </Route>
 
-      {/* FUTURE IMPLEMENTATION: Admin Operations routes */}
-      {/* 
+      {/* Admin Operations routes */}
       <Route 
         element={
           <AdminLayout 
@@ -87,7 +88,6 @@ export const AppRoutes: React.FC = () => {
         <Route path="/admin/categories" element={<AdminCategories />} />
         <Route path="/admin/reports" element={<AdminReports />} />
       </Route>
-      */}
 
       {/* Redirect all unmatched back to public home */}
       <Route path="*" element={<Navigate to="/" replace />} />

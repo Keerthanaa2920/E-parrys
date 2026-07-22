@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { mockDbService } from '../../services/mockDbService';
-import { FiTrendingUp, FiShoppingBag, FiInbox, FiDollarSign, FiMessageSquare } from 'react-icons/fi';
+import { FiShoppingBag, FiDollarSign, FiMessageSquare } from 'react-icons/fi';
 
 export const Dashboard: React.FC = () => {
   const vendorName = "Birla Cement Hub";

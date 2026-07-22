@@ -52,3 +52,13 @@
   - [x] Rebuild public pages (Products.tsx, Categories.tsx, Brands.tsx, About.tsx, Contact.tsx, Login.tsx, VendorRegistration.tsx, ProductDetails.tsx)
   - [x] Rebuild common components (Breadcrumb, SearchInput, Filters, Pagination, EmptyState, ErrorState, LoadingState)
   - [x] Verify compiling
+
+- [ ] Direct Wholesale & Cart Sourcing Settle
+  - [x] Create `CartContext.tsx` and wrap in `App.tsx`
+  - [x] Update products & categories in `dummyData.ts` and version key in `mockDbService.ts`
+  - [x] Revamp `PublicLayout.tsx` (Navbar, Header Search, Cart Drawer checkout panel, Success Modal, and Footer)
+  - [x] Revamp `Home.tsx` (Wholesale banner copy, marquee ticker, Expertise category list, Product Tab grids with Add to Cart, Brands section, bottom CTA)
+  - [x] Update address and phone numbers in `Contact.tsx`
+  - [x] Integrate Cart trigger inputs in `Products.tsx` and `ProductDetails.tsx`
+  - [x] Run typescript compile verification
+
