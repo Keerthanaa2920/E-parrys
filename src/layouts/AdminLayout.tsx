@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { 
-  FiGrid, FiUsers, FiCheckSquare, FiFolder, 
-<<<<<<< HEAD
+import {
+  FiGrid, FiUsers, FiCheckSquare, FiFolder,
   FiPieChart, FiArrowLeft, FiMenu,
   FiChevronDown, FiRefreshCw, FiLogOut
-=======
-  FiPieChart, FiArrowLeft, FiMenu, 
-  FiChevronDown, FiRefreshCw, FiLogOut 
->>>>>>> 3132dde6d60ab63e8f48aa88cc9226fc3d62257f
 } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -79,8 +74,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                   if (window.innerWidth < 1024) setSidebarOpen(false);
                 }}
                 className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-bold uppercase tracking-wider transition-all group relative
-                  ${isActive 
-                    ? 'bg-gradient-to-r from-parrys-terracotta/25 to-transparent text-[var(--color-brand-cyan)] border-l-2 border-[var(--color-brand-cyan)]' 
+                  ${isActive
+                    ? 'bg-gradient-to-r from-parrys-terracotta/25 to-transparent text-[var(--color-brand-cyan)] border-l-2 border-[var(--color-brand-cyan)]'
                     : 'text-slate-400 hover:bg-white/5 hover:text-slate-100'
                   }
                 `}
@@ -90,9 +85,9 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               </Link>
             );
           })}
-          
+
           <div className="h-px bg-slate-800/40 my-4" />
-          
+
           {/* Back to main marketplace */}
           <Link
             to="/"
@@ -111,7 +106,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               <span className="text-[var(--color-brand-cyan)]">99.8%</span>
             </div>
             <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
-              <div 
+              <div
                 className="h-full rounded-full bg-gradient-to-r from-[var(--color-brand-cyan)] to-[var(--color-brand-indigo)]"
                 style={{ width: '99.8%' }}
               />
@@ -121,7 +116,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       </aside>
 
       {/* Main workspace container */}
-      <div 
+      <div
         className={`flex flex-col flex-1 min-w-0 transition-all duration-300 ease-in-out
           ${sidebarOpen ? 'lg:pl-64' : 'lg:pl-20'}
         `}
@@ -203,7 +198,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                       <p className="text-xs font-semibold text-slate-200 truncate">admin@eparrys.com</p>
                     </div>
                     <div className="border-t border-slate-800 pt-1">
-                      <button 
+                      <button
                         onClick={() => navigate('/')}
                         className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs text-rose-450 hover:bg-rose-950/20 transition text-left"
                       >

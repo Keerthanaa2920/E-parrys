@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { FiTag, FiPlus, FiFolder, FiCheckCircle } from 'react-icons/fi';
-import { AnimatePresence, motion } from 'framer-motion';
+import { FiPlus, FiFolder } from 'react-icons/fi';
 
 export const Categories: React.FC = () => {
   const [categories] = useState([

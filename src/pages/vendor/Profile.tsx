@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiBriefcase, FiSave, FiCheckCircle } from 'react-icons/fi';
+import { FiBriefcase, FiSave, FiCheckCircle, FiUser, FiMail, FiMapPin } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const Profile: React.FC = () => {

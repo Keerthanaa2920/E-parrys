@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiLock, FiBell, FiShield, FiGlobe, FiSave } from 'react-icons/fi';
+import { FiBell, FiShield, FiSave } from 'react-icons/fi';
 
 export const Settings: React.FC = () => {
   return (

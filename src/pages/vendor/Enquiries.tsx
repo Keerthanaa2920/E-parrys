@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiMessageSquare, FiClock, FiSearch } from 'react-icons/fi';
+import { FiClock, FiSearch } from 'react-icons/fi';
 
 export const Enquiries: React.FC = () => {
   const [search, setSearch] = useState('');
