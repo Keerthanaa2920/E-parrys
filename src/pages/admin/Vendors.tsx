@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiCheckCircle, FiShield, FiBriefcase, FiMail, FiMapPin } from 'react-icons/fi';
+import { FiCheckCircle, FiShield, FiMapPin } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 
 interface IVendor {

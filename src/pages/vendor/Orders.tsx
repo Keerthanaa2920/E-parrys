@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { mockDbService, IMarketplaceOrder } from '../../services/mockDbService';
-import { FiCheckCircle, FiTrash2, FiTruck, FiBox, FiCheck } from 'react-icons/fi';
+import { mockDbService } from '../../services/mockDbService';
+import type { IMarketplaceOrder } from '../../services/mockDbService';
+import { FiCheckCircle, FiTrash2, FiTruck, FiCheck } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const Orders: React.FC = () => {

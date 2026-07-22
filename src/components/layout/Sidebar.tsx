@@ -1,4 +1,5 @@
 import React from 'react';
+import { Logo } from '../common/Logo';
 import { 
   FiGrid, FiTruck, FiBox, FiTrendingUp, 
   FiFileText, FiHelpCircle, FiChevronLeft, 
@@ -76,8 +77,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Sidebar Header Brand Area */}
         <div className="flex h-16 items-center justify-between px-4 border-b border-[var(--color-brand-border)]">
           <div className="flex items-center gap-3 overflow-hidden">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-tr from-[var(--color-brand-cyan)] to-[var(--color-brand-indigo)] font-bold text-white shadow-lg shadow-cyan-500/10">
-              EP
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center text-[var(--color-brand-cyan)]">
+              <Logo size={28} />
             </div>
             {isOpen && (
               <span className="font-semibold tracking-wider text-slate-100 uppercase truncate">
