@@ -32,7 +32,7 @@ export const About: React.FC = () => {
           );
         })}
       </section>
-/* Grid of Values */
+
       {/* Quality commitment */}
       <section className="rounded-custom border border-parrys-surface-dim/60 bg-white p-6 md:p-8 space-y-4 max-w-3xl mx-auto text-center shadow-sm">
         <h2 className="text-lg font-bold text-parrys-charcoal font-serif">Our Quality Assurance Commitment</h2>
