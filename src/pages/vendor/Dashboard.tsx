@@ -24,8 +24,8 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-100">Welcome back, Birla Cement</h1>
-        <p className="text-xs text-slate-400 mt-1">Here is the active ledger status for your building material supplies.</p>
+        <h1 className="text-2xl font-bold tracking-tight text-parrys-charcoal font-serif">Welcome back, Birla Cement</h1>
+        <p className="text-xs text-parrys-muted mt-1 font-semibold">Here is the active ledger status for your building material supplies.</p>
       </div>
 
       {/* Stats row */}
@@ -33,15 +33,15 @@ export const Dashboard: React.FC = () => {
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <div key={stat.title} className="rounded-xl border border-[var(--color-brand-border)] bg-[#0f172a]/65 p-5 space-y-3 shadow-md hover:border-cyan-500/10 transition">
+            <div key={stat.title} className="rounded-custom border border-parrys-surface-dim bg-white p-5 space-y-3 shadow-sm hover:border-parrys-terracotta/40 hover:shadow-md transition">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{stat.title}</span>
-                <div className={`rounded-lg bg-slate-900 border border-slate-800 p-2 ${stat.color}`}>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-parrys-muted">{stat.title}</span>
+                <div className={`rounded bg-parrys-cream border border-parrys-surface-dim/40 p-2 ${stat.color.replace('400', '600').replace('450', '600')}`}>
                   <Icon className="h-5 w-5" />
                 </div>
               </div>
-              <p className="text-xl font-bold text-slate-100 tracking-tight">{stat.value}</p>
-              <p className="text-[10px] text-slate-500">{stat.desc}</p>
+              <p className="text-xl font-bold text-parrys-charcoal tracking-tight">{stat.value}</p>
+              <p className="text-[10px] font-medium text-parrys-muted">{stat.desc}</p>
             </div>
           );
         })}
@@ -50,24 +50,24 @@ export const Dashboard: React.FC = () => {
       {/* Orders and enquiries log */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Customer RFQs */}
-        <div className="rounded-xl border border-[var(--color-brand-border)] bg-[#0f172a]/40 p-5 space-y-4">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-2">
+        <div className="rounded-custom border border-parrys-surface-dim bg-white p-5 space-y-4 shadow-sm">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-parrys-muted border-b border-parrys-surface-dim/60 pb-2">
             Recent Enquiries (RFQs)
           </h3>
 
           {data.enquiries.length === 0 ? (
-            <p className="text-xs text-slate-500 text-center py-8">No quote enquiries found for your catalog items.</p>
+            <p className="text-xs font-medium text-parrys-muted text-center py-8">No quote enquiries found for your catalog items.</p>
           ) : (
             <div className="space-y-3 max-h-80 overflow-y-auto no-scrollbar">
               {data.enquiries.map((enq) => (
-                <div key={enq.id} className="rounded-lg border border-slate-900 bg-slate-950/40 p-3 space-y-2">
+                <div key={enq.id} className="rounded border border-parrys-surface-dim/60 bg-parrys-cream p-3 space-y-2 hover:bg-parrys-surface-dim/10 transition">
                   <div className="flex items-center justify-between text-[10px]">
-                    <span className="font-semibold text-slate-300">{enq.senderName} ({enq.senderEmail})</span>
-                    <span className="text-slate-500">{enq.date}</span>
+                    <span className="font-bold text-parrys-charcoal">{enq.senderName} <span className="font-medium text-parrys-muted">({enq.senderEmail})</span></span>
+                    <span className="font-medium text-parrys-muted">{enq.date}</span>
                   </div>
-                  <h4 className="text-xs font-bold text-[var(--color-brand-cyan)]">{enq.productName}</h4>
-                  <p className="text-[11px] text-slate-400 italic">" {enq.message} "</p>
-                  <div className="text-[10px] text-slate-500 font-medium">Requested Volume: {enq.quantity} bags</div>
+                  <h4 className="text-xs font-bold text-parrys-terracotta">{enq.productName}</h4>
+                  <p className="text-[11px] text-parrys-charcoal italic font-serif">" {enq.message} "</p>
+                  <div className="text-[10px] text-parrys-muted font-bold">Requested Volume: <span className="text-parrys-charcoal">{enq.quantity} units</span></div>
                 </div>
               ))}
             </div>
@@ -75,33 +75,33 @@ export const Dashboard: React.FC = () => {
         </div>
 
         {/* Customer orders */}
-        <div className="rounded-xl border border-[var(--color-brand-border)] bg-[#0f172a]/40 p-5 space-y-4">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-2">
+        <div className="rounded-custom border border-parrys-surface-dim bg-white p-5 space-y-4 shadow-sm">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-parrys-muted border-b border-parrys-surface-dim/60 pb-2">
             Incoming Orders
           </h3>
 
           {data.orders.length === 0 ? (
-            <p className="text-xs text-slate-500 text-center py-8">No dispatch orders received yet.</p>
+            <p className="text-xs font-medium text-parrys-muted text-center py-8">No dispatch orders received yet.</p>
           ) : (
             <div className="space-y-3 max-h-80 overflow-y-auto no-scrollbar">
               {data.orders.map((ord) => (
-                <div key={ord.id} className="flex items-center justify-between rounded-lg border border-slate-900 bg-slate-950/40 p-3">
+                <div key={ord.id} className="flex items-center justify-between rounded border border-parrys-surface-dim/60 bg-parrys-cream p-3 hover:bg-parrys-surface-dim/10 transition">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-semibold text-slate-200 font-mono">{ord.id}</span>
-                      <span className="text-[10px] text-slate-500">{ord.date}</span>
+                      <span className="text-xs font-bold text-parrys-charcoal font-mono">{ord.id}</span>
+                      <span className="text-[10px] font-medium text-parrys-muted">{ord.date}</span>
                     </div>
-                    <h4 className="text-xs font-bold text-slate-350">{ord.productName}</h4>
-                    <p className="text-[10px] text-slate-500">Qty: {ord.quantity} units | Buyer: {ord.buyerName}</p>
+                    <h4 className="text-xs font-bold text-parrys-terracotta">{ord.productName}</h4>
+                    <p className="text-[10px] font-medium text-parrys-muted">Qty: <span className="font-bold text-parrys-charcoal">{ord.quantity} units</span> | Buyer: <span className="font-bold text-parrys-charcoal">{ord.buyerName}</span></p>
                   </div>
 
                   <div className="text-right space-y-1 shrink-0">
-                    <span className="block text-xs font-bold font-mono text-slate-300">₹{ord.amount.toLocaleString('en-IN')}</span>
+                    <span className="block text-xs font-bold font-mono text-parrys-charcoal">₹{ord.amount.toLocaleString('en-IN')}</span>
                     <span className={`inline-block rounded px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider
-                      ${ord.status === 'delivered' ? 'bg-emerald-950 text-emerald-400 border border-emerald-500/20' : ''}
-                      ${ord.status === 'shipped' ? 'bg-cyan-950 text-cyan-400 border border-cyan-500/20' : ''}
-                      ${ord.status === 'pending' ? 'bg-amber-950 text-amber-400 border border-amber-500/20 animate-pulse' : ''}
-                      ${ord.status === 'cancelled' ? 'bg-rose-950 text-rose-400 border border-rose-500/20' : ''}
+                      ${ord.status === 'delivered' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : ''}
+                      ${ord.status === 'shipped' ? 'bg-blue-50 text-blue-700 border border-blue-200' : ''}
+                      ${ord.status === 'pending' ? 'bg-amber-50 text-amber-700 border border-amber-200 animate-pulse' : ''}
+                      ${ord.status === 'cancelled' ? 'bg-red-50 text-red-700 border border-red-200' : ''}
                     `}>
                       {ord.status}
                     </span>

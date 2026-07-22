@@ -15,15 +15,24 @@ import { Brands } from '../pages/public/Brands';
 import { Login } from '../pages/public/Login';
 import { VendorRegistration } from '../pages/public/VendorRegistration';
 
-// FUTURE PORTALS - PLACEHOLDER IMPORTS (Ready for future implementation)
-/*
+// Portals
 import { VendorLayout } from '../layouts/VendorLayout';
-import { AdminLayout } from '../layouts/AdminLayout';
+// import { AdminLayout } from '../layouts/AdminLayout';
+
+// Vendor Portal Pages
 import { Dashboard as VendorDashboard } from '../pages/vendor/Dashboard';
 import { Products as VendorProducts } from '../pages/vendor/Products';
+import { Categories as VendorCategories } from '../pages/vendor/Categories';
 import { Inventory as VendorInventory } from '../pages/vendor/Inventory';
 import { Orders as VendorOrders } from '../pages/vendor/Orders';
+import { Enquiries as VendorEnquiries } from '../pages/vendor/Enquiries';
+import { Reports as VendorReports } from '../pages/vendor/Reports';
 import { Profile as VendorProfile } from '../pages/vendor/Profile';
+import { Notifications as VendorNotifications } from '../pages/vendor/Notifications';
+import { Settings as VendorSettings } from '../pages/vendor/Settings';
+
+// FUTURE PORTALS - PLACEHOLDER IMPORTS (Ready for future implementation)
+/*
 import { Dashboard as AdminDashboard } from '../pages/admin/Dashboard';
 import { Vendors as AdminVendors } from '../pages/admin/Vendors';
 import { Products as AdminProducts } from '../pages/admin/Products';
@@ -47,16 +56,19 @@ export const AppRoutes: React.FC = () => {
         <Route path="/vendor-registration" element={<VendorRegistration />} />
       </Route>
 
-      {/* FUTURE IMPLEMENTATION: Vendor Portal routes */}
-      {/* 
+      {/* Vendor Portal routes */}
       <Route element={<VendorLayout />}>
         <Route path="/vendor" element={<VendorDashboard />} />
         <Route path="/vendor/products" element={<VendorProducts />} />
+        <Route path="/vendor/categories" element={<VendorCategories />} />
         <Route path="/vendor/inventory" element={<VendorInventory />} />
         <Route path="/vendor/orders" element={<VendorOrders />} />
+        <Route path="/vendor/enquiries" element={<VendorEnquiries />} />
+        <Route path="/vendor/reports" element={<VendorReports />} />
         <Route path="/vendor/profile" element={<VendorProfile />} />
+        <Route path="/vendor/notifications" element={<VendorNotifications />} />
+        <Route path="/vendor/settings" element={<VendorSettings />} />
       </Route>
-      */}
 
       {/* FUTURE IMPLEMENTATION: Admin Operations routes */}
       {/* 
