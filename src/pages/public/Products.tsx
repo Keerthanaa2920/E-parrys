@@ -55,23 +55,23 @@ export const Products: React.FC = () => {
 
       <div className="flex flex-col gap-6 md:flex-row items-start">
         {/* Left Sidebar Filters */}
-        <aside className="w-full md:w-64 shrink-0 rounded-custom border border-parrys-surface-dim/60 bg-white p-4 space-y-4 shadow-sm">
-          <div className="flex items-center gap-2 border-b border-parrys-surface-dim/40 pb-3 text-sm font-semibold text-parrys-charcoal">
-            <FiSliders className="h-4.5 w-4.5 text-parrys-terracotta" />
-            <span className="font-serif">Categories</span>
+        <aside className="w-full md:w-64 shrink-0 rounded-custom border border-parrys-surface-dim/40 bg-white p-5 space-y-5 shadow-sm">
+          <div className="flex items-center gap-2.5 border-b border-parrys-surface-dim/30 pb-3.5 text-xs font-bold uppercase tracking-wider text-parrys-charcoal">
+            <FiSliders className="h-4 w-4 text-parrys-terracotta" />
+            <span>Filter Materials</span>
           </div>
           
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1.5">
             {CATEGORIES.map((cat) => {
               const isSelected = selectedCategory === cat;
               return (
                 <button
                   key={cat}
                   onClick={() => handleCategorySelect(cat)}
-                  className={`text-left rounded-custom px-3 py-2 text-xs font-semibold transition-all btn-transition
+                  className={`text-left rounded-custom px-3.5 py-2.5 text-xs font-semibold transition-all duration-300 cursor-pointer
                     ${isSelected 
-                      ? 'bg-parrys-cream text-parrys-terracotta border-l-2 border-parrys-terracotta font-bold' 
-                      : 'text-parrys-muted hover:bg-parrys-cream/50 hover:text-parrys-terracotta'
+                      ? 'bg-parrys-cream text-parrys-terracotta border-l-2 border-parrys-terracotta font-bold shadow-[0_2px_8px_-4px_rgba(169,68,29,0.1)]' 
+                      : 'text-parrys-muted hover:bg-parrys-cream/40 hover:text-parrys-terracotta'
                     }
                   `}
                 >
@@ -121,37 +121,37 @@ export const Products: React.FC = () => {
                 <Link
                   key={prd.id}
                   to={`/product/${prd.id}`}
-                  className="flex flex-col rounded-custom border border-parrys-surface-dim/60 bg-white p-5 justify-between hover:border-parrys-terracotta hover:shadow-lg transition-all duration-300 group"
+                  className="flex flex-col rounded-custom p-6 justify-between luxury-card group shadow-[0_4px_20px_-10px_rgba(169,68,29,0.05)]"
                 >
-                  <div className="space-y-3.5">
-                    <div className="flex items-center justify-between text-[9px] font-bold text-parrys-muted uppercase">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between text-[9px] font-bold text-parrys-muted uppercase tracking-widest">
                       <span>{prd.category}</span>
-                      <span className="text-parrys-terracotta font-mono">{prd.sku}</span>
+                      <span className="text-parrys-terracotta font-mono bg-parrys-cream px-2 py-0.5 rounded border border-parrys-surface-dim/30">{prd.sku}</span>
                     </div>
                     
-                    <h3 className="text-sm font-semibold text-parrys-charcoal group-hover:text-parrys-terracotta transition leading-snug font-serif">
+                    <h3 className="text-sm font-bold text-parrys-charcoal group-hover:text-parrys-terracotta transition duration-300 leading-snug font-serif">
                       {prd.productName}
                     </h3>
                     
-                    <div className="flex items-center justify-between text-xs text-parrys-muted mt-1 pt-2 border-t border-parrys-surface-dim/10">
+                    <div className="flex items-center justify-between text-xs text-parrys-muted mt-1 pt-2.5 border-t border-parrys-surface-dim/10">
                       <span>Vendor:</span>
-                      <span className="font-semibold text-parrys-charcoal truncate max-w-[140px]">{prd.vendorName}</span>
+                      <span className="font-bold text-parrys-charcoal truncate max-w-[140px]">{prd.vendorName}</span>
                     </div>
-
+ 
                     <div className="flex items-center justify-between text-xs text-parrys-muted">
                       <span>Specs:</span>
-                      <span className="text-parrys-charcoal font-medium truncate max-w-[140px]">{prd.specGrade}</span>
+                      <span className="text-parrys-charcoal font-semibold truncate max-w-[140px]">{prd.specGrade}</span>
                     </div>
                   </div>
-
-                  <div className="flex items-center justify-between border-t border-parrys-surface-dim/40 mt-4 pt-3">
-                    <span className="text-sm font-bold font-mono text-parrys-charcoal">
+ 
+                  <div className="flex items-center justify-between border-t border-parrys-surface-dim/40 mt-4 pt-3.5">
+                    <span className="text-sm font-extrabold font-mono text-parrys-terracotta">
                       ₹{prd.amount.toLocaleString('en-IN')}
                     </span>
-                    <span className={`text-[10px] font-bold uppercase
-                      ${prd.stockStatus === 'in-stock' ? 'text-emerald-600' : ''}
-                      ${prd.stockStatus === 'low-stock' ? 'text-amber-600' : ''}
-                      ${prd.stockStatus === 'out-of-stock' ? 'text-rose-600' : ''}
+                    <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border
+                      ${prd.stockStatus === 'in-stock' ? 'bg-emerald-50 text-emerald-700 border-emerald-500/10' : ''}
+                      ${prd.stockStatus === 'low-stock' ? 'bg-amber-50 text-amber-700 border-amber-500/10' : ''}
+                      ${prd.stockStatus === 'out-of-stock' ? 'bg-rose-50 text-rose-700 border-rose-500/10' : ''}
                     `}>
                       {prd.stockStatus.replace('-', ' ')}
                     </span>
