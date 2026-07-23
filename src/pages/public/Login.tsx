@@ -29,8 +29,24 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex items-center justify-center min-h-[500px]">
-      <div className="w-full max-w-md rounded-custom border border-parrys-surface-dim/40 bg-white p-8 md:p-10 space-y-7 shadow-xl relative overflow-hidden">
+    <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
+      {/* Background Video Layer */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-80"
+        >
+          {/* Subtle architectural / abstract minimal video placeholder (using reliable test URL) */}
+          <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" type="video/mp4" />
+        </video>
+        {/* The Mandatory UX Readability Layer */}
+        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(255, 255, 255, 0.75)' }} />
+      </div>
+
+      <div className="w-full max-w-md rounded-custom border border-parrys-surface-dim/40 bg-white/95 backdrop-blur-md p-8 md:p-10 space-y-7 shadow-2xl relative z-10 overflow-hidden">
         
         {/* Aesthetic background accent */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-parrys-terracotta/5 rounded-full blur-2xl pointer-events-none" />

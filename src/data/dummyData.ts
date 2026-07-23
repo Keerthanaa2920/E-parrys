@@ -14,12 +14,17 @@ export const DUMMY_ORDERS: IMarketplaceItem[] = [
     sku: "SKU-8823901-MP",
     warehouse: "Chennai Main Yard",
     quantity: 350, // bags
-    specGrade: "OPC 53 Grade"
+    specGrade: "OPC 53 Grade",
+    unitMeasure: "bags",
+    minOrderQty: 50,
+    weightPerUnit: 50, // 50kg bag
+    pricingTiers: [{ minQty: 50, maxQty: 199, price: 450 }, { minQty: 200, price: 430 }],
+    serviceablePincodes: ["600001", "600002", "600003"]
   },
   {
     id: "SH-MP-002",
     productName: "Tata Tiscon TMT Steel Rebars",
-    vendorName: "Tata Steel Distributors",
+    vendorName: "Birla Cement Hub", // updated for demo
     date: "2026-07-20",
     status: "approved",
     amount: 87500.00,
@@ -29,7 +34,12 @@ export const DUMMY_ORDERS: IMarketplaceItem[] = [
     sku: "SKU-1098234-MP",
     warehouse: "Visakhapatnam Depot",
     quantity: 15, // tonnes
-    specGrade: "Fe 550D TMT"
+    specGrade: "Fe 550D TMT",
+    unitMeasure: "tonnes",
+    minOrderQty: 1,
+    weightPerUnit: 1000,
+    pricingTiers: [{ minQty: 1, maxQty: 4, price: 87500 }, { minQty: 5, price: 85000 }],
+    serviceablePincodes: [] // all
   },
   {
     id: "SH-MP-003",
@@ -78,18 +88,23 @@ export const DUMMY_ORDERS: IMarketplaceItem[] = [
   },
   {
     id: "SH-MP-006",
-    productName: "Ultratech Premium PPC Cement",
-    vendorName: "Ultratech Cement Depot",
-    date: "2026-07-18",
-    status: "pending",
-    amount: 6200.00,
+    productName: "Birla Super PPC Cement",
+    vendorName: "Birla Cement Hub",
+    date: "2026-07-06",
+    status: "approved",
+    amount: 12500.00,
     priority: "medium",
     category: "Cement & Aggregates",
     stockStatus: "in-stock",
-    sku: "SKU-4423019-MP",
+    sku: "SKU-4930193-MP",
     warehouse: "Bengaluru Yard",
-    quantity: 150, // bags
-    specGrade: "PPC Grade"
+    quantity: 280, // bags
+    specGrade: "Flyash PPC Cement",
+    unitMeasure: "bags",
+    minOrderQty: 50,
+    weightPerUnit: 50,
+    pricingTiers: [{ minQty: 50, maxQty: 499, price: 410 }, { minQty: 500, price: 395 }],
+    serviceablePincodes: ["560001", "560002"]
   },
   {
     id: "SH-MP-007",
@@ -124,17 +139,22 @@ export const DUMMY_ORDERS: IMarketplaceItem[] = [
   {
     id: "SH-MP-009",
     productName: "Red Clay Bricks Class I",
-    vendorName: "Metro Brick Kiln",
+    vendorName: "Birla Cement Hub",
     date: "2026-07-16",
     status: "approved",
-    amount: 15400.00,
+    amount: 15400.00, // per 1000
     priority: "medium",
     category: "Cement & Aggregates",
     stockStatus: "in-stock",
     sku: "SKU-9082348-MP",
     warehouse: "Chennai Main Yard",
-    quantity: 2000, // units
-    specGrade: "Grade-A Solid Red"
+    quantity: 20000, // pieces
+    specGrade: "Grade-A Solid Red",
+    unitMeasure: "pieces",
+    minOrderQty: 3000,
+    weightPerUnit: 2.5,
+    pricingTiers: [{ minQty: 3000, price: 7.70 }],
+    serviceablePincodes: ["600001", "600005"]
   },
   {
     id: "SH-MP-010",
@@ -154,7 +174,7 @@ export const DUMMY_ORDERS: IMarketplaceItem[] = [
   {
     id: "SH-MP-011",
     productName: "River Sand Fine Quality",
-    vendorName: "River Sand Mining Corp",
+    vendorName: "Birla Cement Hub",
     date: "2026-07-15",
     status: "approved",
     amount: 29800.00,
@@ -164,7 +184,12 @@ export const DUMMY_ORDERS: IMarketplaceItem[] = [
     sku: "SKU-5566332-MP",
     warehouse: "Hyderabad Depot",
     quantity: 12, // brass
-    specGrade: "Sieved River Sand"
+    specGrade: "Sieved River Sand",
+    unitMeasure: "brass",
+    minOrderQty: 2,
+    weightPerUnit: 4500, // approx kg per brass
+    pricingTiers: [{ minQty: 2, maxQty: 5, price: 7500 }, { minQty: 6, price: 7200 }],
+    serviceablePincodes: []
   },
   {
     id: "SH-MP-012",

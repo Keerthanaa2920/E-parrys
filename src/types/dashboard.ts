@@ -1,3 +1,9 @@
+export interface ITierPricing {
+  minQty: number;
+  maxQty?: number;
+  price: number;
+}
+
 export interface IMarketplaceItem {
   id: string;
   productName: string;
@@ -12,6 +18,13 @@ export interface IMarketplaceItem {
   warehouse: string;
   quantity: number; // Stock count
   specGrade: string; // e.g. "Fe 550D TMT", "OPC 53 Grade"
+  
+  // New fields for bulk materials
+  unitMeasure?: 'kg' | 'tonnes' | 'bags' | 'pieces' | 'sqft' | 'brass' | 'cft';
+  weightPerUnit?: number; // for freight calculation
+  minOrderQty?: number;
+  pricingTiers?: ITierPricing[];
+  serviceablePincodes?: string[];
 }
 
 export interface IFilterState {
