@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { 
-  FiMenu, FiX, FiUser, FiShoppingCart, FiSearch, 
-  FiTrash2, FiPlus, FiMinus, FiMapPin, FiMail, FiPhone, FiClock, FiCheckCircle 
+import {
+  FiMenu, FiX, FiUser, FiShoppingCart, FiSearch,
+  FiTrash2, FiPlus, FiMinus, FiMapPin, FiMail, FiPhone, FiClock, FiCheckCircle
 } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 import { mockDbService } from '../services/mockDbService';
@@ -13,7 +13,7 @@ export const PublicLayout: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   // Checkout Form State
   const [buyerName, setBuyerName] = useState('');
   const [buyerPhone, setBuyerPhone] = useState('');
@@ -23,7 +23,7 @@ export const PublicLayout: React.FC = () => {
     const today = new Date();
     return today.toISOString().split('T')[0];
   });
-  
+
   // Success Modal State
   const [orderRef, setOrderRef] = useState('');
   const [confirmedPhone, setConfirmedPhone] = useState('');
@@ -44,9 +44,9 @@ export const PublicLayout: React.FC = () => {
   ];
 
   const chennaiAreas = [
-    'Adyar', 'Ambattur', 'Anna Nagar', 'Chromepet', 'Guindy', 'Kanchipuram', 
-    'Madhavaram', 'Mylapore', 'Nungambakkam', 'Ponniammanmedu', 'Porur', 
-    'Red Hills', 'Royapettah', 'Saidapet', 'Sriperumbudur', 'T. Nagar', 
+    'Adyar', 'Ambattur', 'Anna Nagar', 'Chromepet', 'Guindy', 'Kanchipuram',
+    'Madhavaram', 'Mylapore', 'Nungambakkam', 'Ponniammanmedu', 'Porur',
+    'Red Hills', 'Royapettah', 'Saidapet', 'Sriperumbudur', 'T. Nagar',
     'Tambaram', 'Thiruvanmiyur', 'Vandalur', 'Velachery'
   ];
 
@@ -86,7 +86,7 @@ export const PublicLayout: React.FC = () => {
 
     // Generate simulated order reference number
     const randomRef = `EP-${Math.floor(100000 + Math.random() * 900000)}`;
-    
+
     // Save orders to mock DB for each item in the cart
     cartItems.forEach(item => {
       mockDbService.addOrder({
@@ -103,7 +103,7 @@ export const PublicLayout: React.FC = () => {
     setOrderRef(randomRef);
     setSuccessModalOpen(true);
     setCartOpen(false);
-    
+
     // Clear form and cart
     clearCart();
     setBuyerName('');
@@ -116,12 +116,12 @@ export const PublicLayout: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-parrys-cream text-parrys-charcoal font-sans relative">
-      
+
       {/* Sticky Premium Navbar */}
       <nav className="sticky top-0 z-40 bg-parrys-cream/95 backdrop-blur-md border-b border-parrys-surface-dim/20 shadow-[0_2px_20px_-10px_rgba(169,68,29,0.04)]" data-purpose="main-navigation">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between gap-4">
-            
+
             {/* Logo */}
             <div className="shrink-0">
               <Link to="/" className="flex items-center gap-2.5 group">
@@ -148,8 +148,8 @@ export const PublicLayout: React.FC = () => {
                     key={link.name}
                     onClick={() => handleNavClick(link.path)}
                     className={`pb-1 font-bold transition-all duration-300 btn-transition cursor-pointer relative group/item
-                      ${isActive 
-                        ? 'text-parrys-terracotta' 
+                      ${isActive
+                        ? 'text-parrys-terracotta'
                         : 'text-parrys-muted hover:text-parrys-terracotta'
                       }
                     `}
@@ -179,7 +179,7 @@ export const PublicLayout: React.FC = () => {
 
             <div className="flex items-center gap-4">
               {/* Cart Button */}
-              <button 
+              <button
                 onClick={() => setCartOpen(true)}
                 className="relative flex h-11 w-11 items-center justify-center rounded-custom border border-parrys-surface-dim/50 bg-white text-parrys-charcoal hover:bg-parrys-cream hover:border-parrys-terracotta hover:scale-105 transition-all duration-300 btn-transition cursor-pointer shadow-[0_2px_8px_-4px_rgba(169,68,29,0.08)]"
               >
@@ -222,8 +222,8 @@ export const PublicLayout: React.FC = () => {
                     key={link.name}
                     onClick={() => handleNavClick(link.path)}
                     className={`rounded-custom px-3 py-2 text-left text-sm font-semibold transition-colors w-full cursor-pointer
-                      ${isActive 
-                        ? 'bg-parrys-surface-dim/20 text-parrys-terracotta' 
+                      ${isActive
+                        ? 'bg-parrys-surface-dim/20 text-parrys-terracotta'
                         : 'text-parrys-muted hover:bg-white hover:text-parrys-terracotta'
                       }
                     `}
@@ -233,7 +233,7 @@ export const PublicLayout: React.FC = () => {
                 );
               })}
             </div>
-            
+
             {/* Mobile Search */}
             <form onSubmit={handleSearch} className="relative flex items-center bg-white rounded-custom border border-parrys-surface-dim/70 px-3 py-2 shadow-sm">
               <FiSearch className="text-slate-400 mr-2 shrink-0 h-4 w-4" />
@@ -276,7 +276,7 @@ export const PublicLayout: React.FC = () => {
       <footer className="bg-white border-t border-parrys-surface-dim/30 pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-12 border-b border-parrys-surface-dim/30">
-            
+
             {/* Brand column */}
             <div className="space-y-4">
               <div className="flex items-center gap-2">
@@ -362,14 +362,14 @@ export const PublicLayout: React.FC = () => {
         {cartOpen && (
           <>
             {/* Backdrop */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.4 }}
               exit={{ opacity: 0 }}
               onClick={() => setCartOpen(false)}
               className="fixed inset-0 z-50 bg-black cursor-pointer"
             />
-            
+
             {/* Drawer */}
             <motion.div
               initial={{ x: '100%' }}
@@ -384,7 +384,7 @@ export const PublicLayout: React.FC = () => {
                   <FiShoppingCart className="text-parrys-terracotta h-5 w-5" />
                   <h2 className="text-lg font-bold text-parrys-charcoal font-serif">Wholesale Cart Sourcing</h2>
                 </div>
-                <button 
+                <button
                   onClick={() => setCartOpen(false)}
                   className="h-8 w-8 flex items-center justify-center rounded-full border border-parrys-surface-dim/50 hover:bg-parrys-cream text-parrys-muted hover:text-parrys-charcoal cursor-pointer"
                 >
@@ -425,7 +425,7 @@ export const PublicLayout: React.FC = () => {
                           const unit = (item.product as any).unit || 'units';
                           const minQty = (item.product as any).minQty || 10;
                           return (
-                            <div 
+                            <div
                               key={item.product.id}
                               className="bg-white rounded-custom border border-parrys-surface-dim/40 p-4 flex gap-4 justify-between items-start shadow-sm"
                             >
@@ -451,7 +451,7 @@ export const PublicLayout: React.FC = () => {
                                 >
                                   <FiTrash2 className="h-4 w-4" />
                                 </button>
-                                
+
                                 {/* Quantity controls */}
                                 <div className="flex items-center rounded-custom border border-parrys-surface-dim/60 bg-parrys-cream p-0.5">
                                   <button
@@ -499,7 +499,7 @@ export const PublicLayout: React.FC = () => {
                     {/* Sourcing Checkout Details Form */}
                     <form onSubmit={handleCheckoutSubmit} className="border-t border-parrys-surface-dim/40 pt-6 space-y-4">
                       <h3 className="text-xs font-bold text-parrys-muted uppercase tracking-wider">Site Sourcing Details</h3>
-                      
+
                       <div className="flex flex-col gap-1">
                         <label className="text-[10px] font-bold uppercase tracking-wider text-parrys-muted">Buyer Name</label>
                         <input
@@ -582,7 +582,7 @@ export const PublicLayout: React.FC = () => {
         {successModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             {/* Backdrop */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.6 }}
               exit={{ opacity: 0 }}

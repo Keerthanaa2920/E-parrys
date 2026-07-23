@@ -1,11 +1,84 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { mockDbService } from '../../services/mockDbService';
 import { 
   FiArrowRight, FiShield, FiTruck, FiBox, FiCheckCircle, 
-  FiSearch, FiLayers, FiDollarSign, FiChevronDown, FiUserCheck, FiTrendingUp 
+  FiSearch, FiLayers, FiDollarSign, FiChevronDown, FiUserCheck, FiTrendingUp,
+  FiMapPin, FiFileText, FiZap
 } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
+
+interface IMaterialEstimateInfo {
+  category: string;
+  subTypes: string[];
+  unit: string;
+  wholesaleRate: number;
+  retailRate: number;
+  minQty: number;
+  maxQty: number;
+  defaultQty: number;
+  standards: string[];
+}
+
+const ESTIMATE_DATA: Record<string, IMaterialEstimateInfo> = {
+  Cement: {
+    category: 'Cement',
+    subTypes: ['OPC 53 Grade', 'PPC Premium Blend', 'Rapid Hardening Cement'],
+    unit: 'Bags',
+    wholesaleRate: 365,
+    retailRate: 440,
+    minQty: 100,
+    maxQty: 5000,
+    defaultQty: 500,
+    standards: ['IS 12269 High Strength Compliant', 'BIS Certified Depot Direct Dispatch', 'Lab Tested Grade Guarantee']
+  },
+  Steel: {
+    category: 'Steel & TMT',
+    subTypes: ['TMT Bars Fe 500D', 'TMT Bars Fe 550D', 'Structural Beams'],
+    unit: 'Tons',
+    wholesaleRate: 53500,
+    retailRate: 62000,
+    minQty: 2,
+    maxQty: 150,
+    defaultQty: 10,
+    standards: ['IS 1786 Tensile Strength Certified', 'SGS Chemical Audited Batches', 'Corrosion Resistant Coating']
+  },
+  Sand: {
+    category: 'Sand & Aggregates',
+    subTypes: ['M-Sand (Plastering)', 'M-Sand (Concrete)', 'River Sand Premium'],
+    unit: 'Brass',
+    wholesaleRate: 4200,
+    retailRate: 5100,
+    minQty: 5,
+    maxQty: 200,
+    defaultQty: 20,
+    standards: ['Zero Silt content guarantee', 'Moisture-controlled aggregates', 'Strict particle distribution audit']
+  },
+  Tiles: {
+    category: 'Tiles & Flooring',
+    subTypes: ['Vitrified Tiles (2x2)', 'Double Charged Floor Tiles', 'Glazed Ceramic Tiles'],
+    unit: 'Sq Ft',
+    wholesaleRate: 42,
+    retailRate: 56,
+    minQty: 500,
+    maxQty: 10000,
+    defaultQty: 1500,
+    standards: ['ISO 13006 Abrasion Standard', 'Zero Warpage Calibrated Size', 'Anti-skid Matte & High Gloss option']
+  },
+  Paints: {
+    category: 'Paints & Finishes',
+    subTypes: ['Exterior Acrylic Emulsion', 'Interior Luxury Emulsion', 'Waterproof Wall Primer'],
+    unit: 'Liters',
+    wholesaleRate: 195,
+    retailRate: 250,
+    minQty: 100,
+    maxQty: 2000,
+    defaultQty: 300,
+    standards: ['Low VOC Environment Standard', 'IS 15489 Standard Weatherproof', 'Anti-Fungal Warranty Approved']
+  }
+};
+
+const POPULAR_SEARCH_TAGS = ["OPC 53 Cement", "TMT Steel Rebars", "Vitrified Tiles", "Finolex Cables", "River Sand"];
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -33,6 +106,120 @@ export const Home: React.FC = () => {
     } else {
       navigate('/products');
     }
+  };
+
+  // Animated search placeholders
+  const placeholders = useMemo(() => [
+    "Search 'OPC 53 Cement'...",
+    "Search 'TMT Steel Rebars'...",
+    "Search 'Vitrified Tiles'...",
+    "Search 'Finolex Cables'...",
+    "Search 'Asian Paints'..."
+  ], []);
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [currentPlaceholder, setCurrentPlaceholder] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [typingSpeed, setTypingSpeed] = useState(100);
+
+  // Search focus overlay state
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Typwriter effect
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    const handleTyping = () => {
+      const fullText = placeholders[placeholderIndex];
+      if (!isDeleting) {
+        setCurrentPlaceholder(fullText.substring(0, currentPlaceholder.length + 1));
+        setTypingSpeed(100);
+        if (currentPlaceholder === fullText) {
+          timer = setTimeout(() => setIsDeleting(true), 2000);
+          return;
+        }
+      } else {
+        setCurrentPlaceholder(fullText.substring(0, currentPlaceholder.length - 1));
+        setTypingSpeed(50);
+        if (currentPlaceholder === "") {
+          setIsDeleting(false);
+          setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
+        }
+      }
+    };
+    
+    timer = setTimeout(handleTyping, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [currentPlaceholder, isDeleting, placeholderIndex, placeholders, typingSpeed]);
+
+  // Click outside search suggestions
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsSearchFocused(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Filter matching items dynamically
+  const matchingProducts = useMemo(() => {
+    if (!searchQuery.trim()) return [];
+    const query = searchQuery.toLowerCase();
+    return mockDbService.getProducts()
+      .filter(p => p.status === 'approved' && p.productName.toLowerCase().includes(query))
+      .slice(0, 5);
+  }, [searchQuery]);
+
+  const handleTagClick = (tag: string) => {
+    setSearchQuery(tag);
+    setIsSearchFocused(false);
+    navigate(`/products?search=${encodeURIComponent(tag)}`);
+  };
+
+  // RFQ Estimator State
+  const [estimatorCategory, setEstimatorCategory] = useState<string>('Cement');
+  const [estimatorSubType, setEstimatorSubType] = useState<string>('OPC 53 Grade');
+  const [estimatorQty, setEstimatorQty] = useState<number>(500);
+  const [estimatorLocation, setEstimatorLocation] = useState<string>('Chennai');
+
+  const handleEstimatorCategoryChange = (cat: string) => {
+    setEstimatorCategory(cat);
+    const data = ESTIMATE_DATA[cat];
+    setEstimatorSubType(data.subTypes[0]);
+    setEstimatorQty(data.defaultQty);
+  };
+
+  const estimateInfo = useMemo(() => {
+    return ESTIMATE_DATA[estimatorCategory];
+  }, [estimatorCategory]);
+
+  const calculations = useMemo(() => {
+    const wholesaleCost = estimatorQty * estimateInfo.wholesaleRate;
+    const retailCost = estimatorQty * estimateInfo.retailRate;
+    const netSavings = retailCost - wholesaleCost;
+    const savingsPercentage = Math.round((netSavings / retailCost) * 100);
+    return {
+      wholesaleCost,
+      retailCost,
+      netSavings,
+      savingsPercentage
+    };
+  }, [estimatorQty, estimateInfo]);
+
+  const handleRFQSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`RFQ Estimator Sourcing - ${estimatorCategory}`);
+    const message = encodeURIComponent(
+      `Hello E-Parrys,\n\nI would like to submit a bulk sourcing inquiry:\n` +
+      `- Material Category: ${estimatorCategory}\n` +
+      `- Specific Grade/Type: ${estimatorSubType}\n` +
+      `- Required Volume: ${estimatorQty.toLocaleString('en-IN')} ${estimateInfo.unit}\n` +
+      `- Delivery Location: ${estimatorLocation}\n` +
+      `- Target Wholesale Budget: ₹${calculations.wholesaleCost.toLocaleString('en-IN')}\n\n` +
+      `Please connect me with verified wholesalers to verify dispatch log schedules.`
+    );
+    navigate(`/contact?subject=${subject}&message=${message}`);
   };
 
   const coreCategories = [
@@ -91,23 +278,122 @@ export const Home: React.FC = () => {
                 E-Parrys is an enterprise-grade digital B2B marketplace connecting developers directly with certified building material manufacturers.
               </p>
 
-              {/* Hero Search Bar */}
-              <form onSubmit={handleSearchSubmit} className="flex items-center bg-white rounded-custom border border-parrys-surface-dim p-1.5 shadow-sm max-w-md">
-                <FiSearch className="h-5 w-5 text-slate-400 ml-3 shrink-0" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search cement, steel rebars, tiles, paints..."
-                  className="w-full bg-transparent border-0 px-3 text-xs focus:ring-0 focus:outline-none text-parrys-charcoal placeholder-slate-400"
-                />
-                <button
-                  type="submit"
-                  className="bg-parrys-terracotta text-white px-5 py-2.5 rounded-custom text-xs font-bold hover:bg-parrys-terracotta-dark btn-transition shrink-0"
+              {/* Hero Search Bar Container */}
+              <div className="relative max-w-md z-30" ref={dropdownRef}>
+                <form 
+                  onSubmit={handleSearchSubmit} 
+                  className={`flex items-center bg-white rounded-custom border p-1.5 shadow-sm transition-all duration-300 ${
+                    isSearchFocused ? 'border-parrys-terracotta shadow-md shadow-parrys-terracotta/5' : 'border-parrys-surface-dim'
+                  }`}
                 >
-                  Search
-                </button>
-              </form>
+                  <FiSearch className="h-5 w-5 text-slate-400 ml-3 shrink-0" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setIsSearchFocused(true);
+                    }}
+                    onFocus={() => setIsSearchFocused(true)}
+                    placeholder={currentPlaceholder || "Search cement, steel rebars, tiles..."}
+                    className="w-full bg-transparent border-0 px-3 text-xs focus:ring-0 focus:outline-none text-parrys-charcoal placeholder-slate-400"
+                  />
+                  <button
+                    type="submit"
+                    className="bg-parrys-terracotta text-white px-5 py-2.5 rounded-custom text-xs font-bold hover:bg-parrys-terracotta-dark btn-transition shrink-0 cursor-pointer"
+                  >
+                    Search
+                  </button>
+                </form>
+
+                {/* Suggestions Dropdown */}
+                <AnimatePresence>
+                  {isSearchFocused && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute top-full left-0 right-0 mt-2 bg-white rounded-custom border border-parrys-surface-dim shadow-xl z-50 p-4 overflow-hidden glass-panel"
+                    >
+                      {/* Trending searches */}
+                      {!searchQuery.trim() ? (
+                        <div className="space-y-4">
+                          <div>
+                            <span className="text-[10px] font-bold text-parrys-muted uppercase tracking-wider block mb-2">
+                              Trending Bulk Sourcing
+                            </span>
+                            <div className="flex flex-wrap gap-2">
+                              {POPULAR_SEARCH_TAGS.map((tag) => (
+                                <button
+                                  key={tag}
+                                  type="button"
+                                  onClick={() => handleTagClick(tag)}
+                                  className="text-[10px] bg-parrys-cream border border-parrys-surface-dim text-parrys-muted px-2.5 py-1.5 rounded-full font-medium hover:border-parrys-terracotta hover:text-parrys-terracotta hover:bg-parrys-cream/50 transition duration-200 cursor-pointer"
+                                >
+                                  {tag}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          <div className="pt-3 border-t border-parrys-surface-dim/30 flex items-center gap-2 text-parrys-muted text-[10px] font-medium">
+                            <FiZap className="text-amber-500 animate-pulse h-3.5 w-3.5 shrink-0" />
+                            <span>Quick Tip: Enter specific volumes for direct mill rates.</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="space-y-3">
+                          <span className="text-[10px] font-bold text-parrys-muted uppercase tracking-wider block mb-1">
+                            Matching Catalog Items ({matchingProducts.length})
+                          </span>
+                          
+                          {matchingProducts.length > 0 ? (
+                            <div className="space-y-1 max-h-[220px] overflow-y-auto">
+                              {matchingProducts.map((prd) => (
+                                <Link
+                                  key={prd.id}
+                                  to={`/product/${prd.id}`}
+                                  onClick={() => setIsSearchFocused(false)}
+                                  className="flex items-center justify-between p-2 rounded hover:bg-parrys-cream/60 transition duration-200 group border border-transparent hover:border-parrys-surface-dim/35"
+                                >
+                                  <div className="flex flex-col min-w-0 pr-4">
+                                    <span className="text-xs font-bold text-parrys-charcoal group-hover:text-parrys-terracotta transition truncate">
+                                      {prd.productName}
+                                    </span>
+                                    <span className="text-[9px] text-parrys-muted font-mono uppercase tracking-wider">
+                                      {prd.category} • SKU: {prd.sku}
+                                    </span>
+                                  </div>
+                                  <div className="text-right shrink-0 flex flex-col items-end">
+                                    <span className="text-xs font-bold font-mono text-parrys-terracotta">
+                                      ₹{prd.amount.toLocaleString('en-IN')}
+                                    </span>
+                                    <span className="text-[8px] text-emerald-600 bg-emerald-50 px-1 py-0.2 rounded border border-emerald-500/10 uppercase tracking-widest font-bold">
+                                      {prd.warehouse}
+                                    </span>
+                                  </div>
+                                </Link>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="py-6 text-center space-y-2">
+                              <p className="text-xs text-parrys-muted">No items matching "{searchQuery}"</p>
+                              <Link 
+                                to="/products"
+                                onClick={() => setIsSearchFocused(false)}
+                                className="text-[10px] font-bold text-parrys-terracotta uppercase hover:underline"
+                              >
+                                View full catalog ledger
+                              </Link>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               <div className="flex flex-wrap gap-4">
                 <Link
@@ -139,6 +425,201 @@ export const Home: React.FC = () => {
                 <p className="text-parrys-charcoal font-serif text-xl leading-snug">
                   Premium works start with <span className="text-parrys-terracotta italic underline font-bold">verified sourcing.</span>
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2.5 RFQ Price Estimator Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-purpose="rfq-estimator">
+        <div className="rounded-3xl border border-parrys-surface-dim/60 bg-white p-8 md:p-12 shadow-xl relative overflow-hidden">
+          {/* Subtle decorative background gradient */}
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-parrys-cream rounded-full opacity-60 blur-[80px] pointer-events-none -mr-40 -mt-40" />
+          
+          <div className="grid lg:grid-cols-12 gap-10 items-stretch relative z-10">
+            {/* Left Column: Calculator Controls */}
+            <div className="lg:col-span-7 flex flex-col justify-between space-y-8">
+              <div className="space-y-3">
+                <span className="text-[10px] font-bold tracking-widest text-parrys-terracotta uppercase block">Interactive Estimator</span>
+                <h2 className="text-3xl font-serif text-parrys-charcoal leading-tight">Direct Wholesaler Sourcing Calculator</h2>
+                <p className="text-xs text-parrys-muted max-w-lg leading-relaxed">
+                  Select a category and adjust the slider to see how much commercial developers save by sourcing bulk building aggregates directly from regional manufacturer depots.
+                </p>
+              </div>
+
+              {/* Category tabs */}
+              <div className="space-y-4">
+                <div>
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-parrys-muted block mb-2">Select Material Category</label>
+                  <div className="flex flex-wrap gap-2">
+                    {Object.keys(ESTIMATE_DATA).map((catKey) => {
+                      const isActive = estimatorCategory === catKey;
+                      return (
+                        <button
+                          key={catKey}
+                          type="button"
+                          onClick={() => handleEstimatorCategoryChange(catKey)}
+                          className={`px-4 py-2.5 rounded-custom text-xs font-bold tracking-wide uppercase transition duration-300 cursor-pointer ${
+                            isActive 
+                              ? 'bg-parrys-terracotta text-white shadow-md shadow-parrys-terracotta/15'
+                              : 'bg-parrys-cream border border-parrys-surface-dim text-parrys-charcoal hover:bg-parrys-surface-dim/20'
+                          }`}
+                        >
+                          {catKey}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {/* Subtype Dropdown */}
+                  <div>
+                    <label className="text-[10px] font-bold uppercase tracking-wider text-parrys-muted block mb-2">Material Type / Grade</label>
+                    <div className="relative">
+                      <select
+                        value={estimatorSubType}
+                        onChange={(e) => setEstimatorSubType(e.target.value)}
+                        className="w-full bg-parrys-cream border border-parrys-surface-dim rounded-custom py-3 px-4 text-xs font-bold text-parrys-charcoal appearance-none focus:outline-none focus:border-parrys-terracotta focus:ring-1 focus:ring-parrys-terracotta"
+                      >
+                        {estimateInfo.subTypes.map((type) => (
+                          <option key={type} value={type}>{type}</option>
+                        ))}
+                      </select>
+                      <FiChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-parrys-muted pointer-events-none" />
+                    </div>
+                  </div>
+
+                  {/* Delivery Location */}
+                  <div>
+                    <label className="text-[10px] font-bold uppercase tracking-wider text-parrys-muted block mb-2">Delivery Metro Yard</label>
+                    <div className="relative">
+                      <select
+                        value={estimatorLocation}
+                        onChange={(e) => setEstimatorLocation(e.target.value)}
+                        className="w-full bg-parrys-cream border border-parrys-surface-dim rounded-custom py-3 px-4 text-xs font-bold text-parrys-charcoal appearance-none focus:outline-none focus:border-parrys-terracotta focus:ring-1 focus:ring-parrys-terracotta"
+                      >
+                        <option value="Chennai">Chennai Metro Hub</option>
+                        <option value="Bangalore">Bangalore Depot Yard</option>
+                        <option value="Hyderabad">Hyderabad Logistics Ring</option>
+                        <option value="Mumbai">Mumbai Sourcing Dock</option>
+                        <option value="Delhi NCR">Delhi NCR Infrastructure Ring</option>
+                      </select>
+                      <FiMapPin className="absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-parrys-muted pointer-events-none" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Volume Slider */}
+                <div className="pt-2">
+                  <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-parrys-muted mb-2">
+                    <span>Required Sourcing Volume</span>
+                    <span className="text-xs text-parrys-terracotta font-mono font-bold bg-parrys-cream border border-parrys-surface-dim/40 px-2.5 py-0.5 rounded">
+                      {estimatorQty.toLocaleString('en-IN')} {estimateInfo.unit}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <button
+                      type="button"
+                      onClick={() => setEstimatorQty(prev => Math.max(estimateInfo.minQty, prev - (estimatorCategory === 'Steel' || estimatorCategory === 'Sand' ? 1 : 50)))}
+                      className="w-9 h-9 flex items-center justify-center bg-parrys-cream border border-parrys-surface-dim text-parrys-charcoal rounded-full font-bold text-lg hover:bg-parrys-surface-dim/20 select-none cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="range"
+                      min={estimateInfo.minQty}
+                      max={estimateInfo.maxQty}
+                      step={estimatorCategory === 'Steel' || estimatorCategory === 'Sand' ? 1 : 50}
+                      value={estimatorQty}
+                      onChange={(e) => setEstimatorQty(parseInt(e.target.value))}
+                      className="w-full accent-parrys-terracotta h-1 bg-parrys-surface-dim rounded-lg appearance-none cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setEstimatorQty(prev => Math.min(estimateInfo.maxQty, prev + (estimatorCategory === 'Steel' || estimatorCategory === 'Sand' ? 1 : 50)))}
+                      className="w-9 h-9 flex items-center justify-center bg-parrys-cream border border-parrys-surface-dim text-parrys-charcoal rounded-full font-bold text-lg hover:bg-parrys-surface-dim/20 select-none cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between text-[8px] font-bold text-parrys-muted uppercase tracking-widest mt-1.5 px-1">
+                    <span>Min: {estimateInfo.minQty} {estimateInfo.unit}</span>
+                    <span>Max: {estimateInfo.maxQty.toLocaleString('en-IN')} {estimateInfo.unit}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Pricing Breakdown Card (Sleek Glassmorphism) */}
+            <div className="lg:col-span-5 flex">
+              <div className="w-full rounded-2xl glass-panel border border-parrys-terracotta/20 p-6 flex flex-col justify-between space-y-6 relative overflow-hidden shadow-lg">
+                {/* Micro-sparkle decor */}
+                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-parrys-terracotta to-amber-500" />
+                
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-parrys-muted">Cost Breakdown</span>
+                    <span className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-500/10 px-2 py-0.5 rounded">
+                      <FiCheckCircle className="h-3 w-3 animate-pulse" />
+                      Direct Depot Sourcing
+                    </span>
+                  </div>
+                  
+                  <div className="space-y-2.5">
+                    {/* Retail rate */}
+                    <div className="flex justify-between items-center text-xs text-parrys-muted">
+                      <span>Standard Retail Value</span>
+                      <span className="font-mono line-through opacity-60">₹{calculations.retailCost.toLocaleString('en-IN')}</span>
+                    </div>
+
+                    {/* Wholesale rate */}
+                    <div className="flex justify-between items-end">
+                      <span className="text-xs font-bold text-parrys-charcoal">E-Parrys Direct Price</span>
+                      <span className="text-2xl font-bold font-mono text-parrys-charcoal leading-none">
+                        ₹{calculations.wholesaleCost.toLocaleString('en-IN')}
+                      </span>
+                    </div>
+
+                    {/* Savings Panel */}
+                    <div className="bg-emerald-50 border border-emerald-500/10 rounded-xl p-4 flex items-center justify-between gap-4 mt-2">
+                      <div className="space-y-0.5">
+                        <span className="text-[9px] uppercase tracking-wider font-bold text-emerald-700 block">Total Net Savings</span>
+                        <span className="text-lg font-bold font-mono text-emerald-800">
+                          ₹{calculations.netSavings.toLocaleString('en-IN')}
+                        </span>
+                      </div>
+                      <div className="w-12 h-12 rounded-full border-2 border-emerald-500 flex flex-col items-center justify-center text-emerald-700 font-extrabold text-xs font-mono shrink-0 bg-white">
+                        <span>{calculations.savingsPercentage}%</span>
+                        <span className="text-[6px] tracking-tighter uppercase font-semibold leading-none">Save</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Technical compliance parameters */}
+                <div className="space-y-2">
+                  <span className="text-[9px] font-bold text-parrys-muted uppercase tracking-wider block">Compliance Standards Included:</span>
+                  <div className="space-y-1.5">
+                    {estimateInfo.standards.map((std, i) => (
+                      <div key={i} className="flex items-start gap-1.5 text-[10px] text-parrys-muted font-medium">
+                        <FiShield className="text-parrys-terracotta h-3.5 w-3.5 shrink-0 mt-0.5" />
+                        <span className="leading-tight">{std}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Action button */}
+                <button
+                  onClick={handleRFQSubmit}
+                  className="w-full bg-parrys-terracotta text-white py-3.5 rounded-custom font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-parrys-terracotta-dark btn-transition shadow-lg shadow-parrys-terracotta/15 cursor-pointer"
+                >
+                  <FiFileText className="h-4 w-4" />
+                  <span>Request Verified Quotes</span>
+                  <FiArrowRight className="h-4 w-4" />
+                </button>
               </div>
             </div>
           </div>
