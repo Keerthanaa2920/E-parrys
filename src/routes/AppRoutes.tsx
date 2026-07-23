@@ -14,6 +14,7 @@ import { Contact } from '../pages/public/Contact';
 import { Brands } from '../pages/public/Brands';
 import { Login } from '../pages/public/Login';
 import { VendorRegistration } from '../pages/public/VendorRegistration';
+import { Cart } from '../pages/public/Cart';
 import { Profile as CustomerProfile } from '../pages/public/Profile';
 import { HowItWorks } from '../pages/public/HowItWorks';
 
@@ -56,6 +57,7 @@ export const AppRoutes: React.FC = () => {
   <Route path="/contact" element={<Contact />} />
   <Route path="/login" element={<Login />} />
   <Route path="/vendor-registration" element={<VendorRegistration />} />
+  <Route path="/cart" element={<Cart />} />
   <Route path="/profile" element={<CustomerProfile />} />
   <Route path="/how-it-works" element={<HowItWorks />} />
 </Route>
