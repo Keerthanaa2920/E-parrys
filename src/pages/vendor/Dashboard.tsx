@@ -168,7 +168,6 @@ export const Dashboard: React.FC = () => {
                       ${ord.status === 'shipped' ? 'bg-blue-50 text-blue-700 border border-blue-200' : ''}
                       ${ord.status === 'pending' ? 'bg-amber-50 text-amber-700 border border-amber-200' : ''}
                       ${ord.status === 'cancelled' ? 'bg-red-50 text-red-700 border border-red-200' : ''}
-                      ${ord.status === 'approved' ? 'bg-purple-50 text-purple-700 border border-purple-200' : ''}
                     `}>
                       {ord.status}
                     </span>

@@ -431,6 +431,65 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <section id="how-it-works" className="py-16 bg-white border-t border-b border-parrys-surface-dim/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <div className="text-center max-w-xl mx-auto space-y-2">
+            <span className="text-[10px] font-bold tracking-widest text-parrys-terracotta uppercase block">Workflow</span>
+            <h2 className="text-3xl lg:text-4xl text-parrys-charcoal font-serif">How It Works</h2>
+            <p className="text-xs text-parrys-muted font-semibold">From browse to delivery — four simple steps.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Step 01 */}
+            <Link to="/how-it-works" className="rounded-custom border border-parrys-surface-dim/60 bg-parrys-cream/10 p-6 space-y-4 hover:border-parrys-terracotta transition duration-300 relative overflow-hidden shadow-sm group block">
+              <span className="text-5xl font-mono font-extrabold text-parrys-terracotta/20 block transition-transform group-hover:scale-105 duration-300">01</span>
+              <h3 className="text-sm font-bold text-parrys-charcoal font-serif">Browse & Add</h3>
+              <p className="text-xs text-parrys-muted leading-relaxed font-semibold">
+                Find materials in our catalog and add them to your cart with the required quantity. Minimum 10 units per product.
+              </p>
+            </Link>
+
+            {/* Step 02 */}
+            <Link to="/how-it-works" className="rounded-custom border border-parrys-surface-dim/60 bg-parrys-cream/10 p-6 space-y-4 hover:border-parrys-terracotta transition duration-300 relative overflow-hidden shadow-sm group block">
+              <span className="text-5xl font-mono font-extrabold text-parrys-terracotta/20 block transition-transform group-hover:scale-105 duration-300">02</span>
+              <h3 className="text-sm font-bold text-parrys-charcoal font-serif">Submit Details</h3>
+              <p className="text-xs text-parrys-muted leading-relaxed font-semibold">
+                Share your delivery address, Chennai area and preferred date. No signup required.
+              </p>
+            </Link>
+
+            {/* Step 03 */}
+            <Link to="/how-it-works" className="rounded-custom border border-parrys-surface-dim/60 bg-parrys-cream/10 p-6 space-y-4 hover:border-parrys-terracotta transition duration-300 relative overflow-hidden shadow-sm group block">
+              <span className="text-5xl font-mono font-extrabold text-parrys-terracotta/20 block transition-transform group-hover:scale-105 duration-300">03</span>
+              <h3 className="text-sm font-bold text-parrys-charcoal font-serif">Confirmation Call</h3>
+              <p className="text-xs text-parrys-muted leading-relaxed font-semibold">
+                Our team calls you within 2 hours to confirm pricing, dispatch and any special requirements.
+              </p>
+            </Link>
+
+            {/* Step 04 */}
+            <Link to="/how-it-works" className="rounded-custom border border-parrys-surface-dim/60 bg-parrys-cream/10 p-6 space-y-4 hover:border-parrys-terracotta transition duration-300 relative overflow-hidden shadow-sm group block">
+              <span className="text-5xl font-mono font-extrabold text-parrys-terracotta/20 block transition-transform group-hover:scale-105 duration-300">04</span>
+              <h3 className="text-sm font-bold text-parrys-charcoal font-serif">Same-Day Delivery</h3>
+              <p className="text-xs text-parrys-muted leading-relaxed font-semibold">
+                Materials are delivered to your site the same day, anywhere in Chennai.
+              </p>
+            </Link>
+          </div>
+
+          <div className="flex justify-center">
+            <Link
+              to="/how-it-works"
+              className="bg-parrys-terracotta hover:bg-parrys-terracotta-dark text-white px-8 py-3.5 rounded-custom font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:scale-[1.02] transition duration-300 shadow-lg shadow-parrys-terracotta/15"
+            >
+              <span>Learn Sourcing Details</span>
+              <FiArrowRight className="h-4.5 w-4.5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* 2.5 RFQ Price Estimator Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-purpose="rfq-estimator">
         <div className="rounded-3xl border border-parrys-surface-dim/60 bg-white p-8 md:p-12 shadow-xl relative overflow-hidden">

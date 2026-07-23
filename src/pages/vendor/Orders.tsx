@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { mockDbService } from '../../services/mockDbService';
 import type { IMarketplaceOrder } from '../../services/mockDbService';
-import { FiCheckCircle, FiTrash2, FiTruck, FiCheck, FiDownload, FiCreditCard, FiPackage, FiFileText } from 'react-icons/fi';
+import { FiCheckCircle, FiTrash2, FiTruck, FiCheck, FiDownload, FiCreditCard, FiPackage } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const Orders: React.FC = () => {
@@ -82,7 +82,6 @@ export const Orders: React.FC = () => {
                       ${ord.status === 'shipped' ? 'bg-blue-50 text-blue-700 border-blue-200' : ''}
                       ${ord.status === 'pending' ? 'bg-amber-50 text-amber-700 border-amber-200 animate-pulse' : ''}
                       ${ord.status === 'cancelled' ? 'bg-red-50 text-red-700 border-red-200' : ''}
-                      ${ord.status === 'approved' ? 'bg-purple-50 text-purple-700 border-purple-200' : ''}
                     `}>
                       <span className="capitalize">{ord.status}</span>
                     </span>

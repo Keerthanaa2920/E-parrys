@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { 
   FiUser, FiBriefcase, FiArrowLeft, FiCheckCircle, 
   FiFileText, FiChevronDown, FiSend
@@ -59,7 +59,20 @@ const FileUploadField: React.FC<FileUploadProps> = ({ label, required, fileName,
 
 export const VendorRegistration: React.FC = () => {
   const navigate = useNavigate();
-  const [selectedRole, setSelectedRole] = useState<'customer' | 'vendor' | null>(null);
+  const [searchParams] = useSearchParams();
+  const roleParam = searchParams.get('role');
+  const [selectedRole, setSelectedRole] = useState<'customer' | 'vendor' | null>(() => {
+    if (roleParam === 'customer' || roleParam === 'vendor') {
+      return roleParam;
+    }
+    return null;
+  });
+
+  useEffect(() => {
+    if (roleParam === 'customer' || roleParam === 'vendor') {
+      setSelectedRole(roleParam);
+    }
+  }, [roleParam]);
   const [isSuccess, setIsSuccess] = useState(false);
   const [toast, setToast] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
