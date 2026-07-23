@@ -66,15 +66,15 @@ export const MetricsGrid: React.FC<MetricsGridProps> = ({ metrics }) => {
         const areaPath = getAreaPath(metric.trendData, width, height);
 
         // Determine color based on trend/change direction
-        let trendColor = "text-slate-400";
-        let sparkColor = "#94a3b8"; // Slate-400
+        let trendColor = "text-gray-400";
+        let sparkColor = "#9ca3af"; // Gray-400
         let gradId = `grad-${idx}`;
 
         if (metric.changeType === 'increase') {
-          trendColor = "text-emerald-400";
+          trendColor = "text-emerald-500";
           sparkColor = "#10b981"; // Emerald-500
         } else if (metric.changeType === 'decrease') {
-          trendColor = "text-rose-400";
+          trendColor = "text-red-500";
           sparkColor = "#f43f5e"; // Rose-500
         }
 
@@ -82,14 +82,14 @@ export const MetricsGrid: React.FC<MetricsGridProps> = ({ metrics }) => {
           <motion.div
             key={metric.title}
             variants={cardVariants}
-            className="rounded-xl border border-[var(--color-brand-border)] bg-[#0f172a]/65 p-5 flex flex-col justify-between shadow-md relative overflow-hidden transition-all duration-300 hover:border-cyan-500/30 hover:shadow-cyan-500/5 group"
+            className="rounded-xl border border-orange-100 bg-white p-5 flex flex-col justify-between shadow-sm relative overflow-hidden transition-all duration-300 hover:border-orange-200 hover:shadow-orange-500/5 group"
           >
             {/* Top row: Label & Icon */}
             <div className="flex items-start justify-between">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 group-hover:text-slate-400 transition">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-gray-500 group-hover:text-gray-600 transition">
                 {metric.title}
               </span>
-              <div className="rounded-lg border border-[var(--color-brand-border)] bg-slate-900/60 p-2 text-slate-300 group-hover:text-[var(--color-brand-cyan)] group-hover:border-cyan-500/30 transition-all">
+              <div className="rounded-lg border border-orange-100 bg-orange-50 p-2 text-gray-500 group-hover:text-orange-500 group-hover:border-orange-200 transition-all">
                 <IconComponent className="h-5 w-5" />
               </div>
             </div>
@@ -97,7 +97,7 @@ export const MetricsGrid: React.FC<MetricsGridProps> = ({ metrics }) => {
             {/* Middle row: Big Value & Sparkline */}
             <div className="flex items-end justify-between mt-4">
               <div>
-                <span className="text-2xl font-bold text-slate-100 tracking-tight">
+                <span className="text-2xl font-bold text-gray-900 tracking-tight">
                   {metric.value}
                 </span>
                 
@@ -113,7 +113,7 @@ export const MetricsGrid: React.FC<MetricsGridProps> = ({ metrics }) => {
                       {Math.abs(metric.change)}%
                     </span>
                   )}
-                  <span className="text-[10px] text-slate-500">
+                  <span className="text-[10px] text-gray-500">
                     {metric.subtext}
                   </span>
                 </div>
@@ -154,7 +154,7 @@ export const MetricsGrid: React.FC<MetricsGridProps> = ({ metrics }) => {
             </div>
             
             {/* Tiny accent bar hover glow */}
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[var(--color-brand-cyan)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-orange-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </motion.div>
         );
       })}

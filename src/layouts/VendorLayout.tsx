@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { 
   FiGrid, FiShoppingBag, FiPackage, FiList, 
@@ -15,10 +15,26 @@ export const VendorLayout: React.FC = () => {
   const navigate = useNavigate();
   const currentPath = location.pathname;
 
+  const [vendorName, setVendorName] = useState('Birla Cement Depot');
+  const [vendorEmail, setVendorEmail] = useState('wholesale@birlacement.com');
+
+  useEffect(() => {
+    const isAuth = localStorage.getItem('vendor_auth');
+    if (!isAuth) {
+      navigate('/vendor-login');
+    } else {
+      const storedName = localStorage.getItem('vendor_name');
+      const storedEmail = localStorage.getItem('vendor_email');
+      if (storedName) setVendorName(storedName);
+      if (storedEmail) setVendorEmail(storedEmail);
+    }
+  }, [navigate]);
+
+  const vendorInitials = vendorName.substring(0, 2).toUpperCase();
+
   const menuItems = [
     { name: 'Vendor Dashboard', icon: FiGrid, path: '/vendor' },
     { name: 'My Products', icon: FiShoppingBag, path: '/vendor/products' },
-    { name: 'Categories', icon: FiTag, path: '/vendor/categories' },
     { name: 'Stock Inventory', icon: FiPackage, path: '/vendor/inventory' },
     { name: 'Customer Orders', icon: FiList, path: '/vendor/orders' },
     { name: 'Enquiries', icon: FiMessageSquare, path: '/vendor/enquiries' },
@@ -130,10 +146,10 @@ export const VendorLayout: React.FC = () => {
                 className="flex items-center gap-2 rounded-custom border border-parrys-surface-dim bg-white p-1.5 text-left text-parrys-charcoal hover:bg-parrys-surface-dim/10 transition focus:outline-none btn-transition"
               >
                 <div className="flex h-7.5 w-7.5 items-center justify-center rounded bg-parrys-terracotta text-xs font-bold text-white uppercase">
-                  VD
+                  {vendorInitials}
                 </div>
                 <div className="hidden flex-col text-xs md:flex pr-1">
-                  <span className="font-semibold text-parrys-charcoal">Birla Cement Depot</span>
+                  <span className="font-semibold text-parrys-charcoal">{vendorName}</span>
                   <span className="text-[10px] text-parrys-muted">Premium Supplier</span>
                 </div>
                 <FiChevronDown className="h-4 w-4 text-parrys-muted hidden md:block" />
@@ -150,7 +166,7 @@ export const VendorLayout: React.FC = () => {
                   >
                     <div className="px-3 py-2 border-b border-parrys-surface-dim/50">
                       <p className="text-xs text-parrys-muted font-semibold">Supplier portal</p>
-                      <p className="text-xs font-bold text-parrys-charcoal truncate">wholesale@birlacement.com</p>
+                      <p className="text-xs font-bold text-parrys-charcoal truncate">{vendorEmail}</p>
                     </div>
                     <div className="py-1">
                       <button 
@@ -163,7 +179,12 @@ export const VendorLayout: React.FC = () => {
                     </div>
                     <div className="border-t border-parrys-surface-dim/50 pt-1">
                       <button 
-                        onClick={() => navigate('/')}
+                        onClick={() => {
+                          localStorage.removeItem('vendor_auth');
+                          localStorage.removeItem('vendor_name');
+                          localStorage.removeItem('vendor_email');
+                          navigate('/vendor-login');
+                        }}
                         className="flex w-full items-center gap-2 rounded px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 transition text-left"
                       >
                         <FiLogOut className="h-4 w-4" />

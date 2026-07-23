@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { mockDbService } from '../../services/mockDbService';
 import type { IMarketplaceItem, ITierPricing } from '../../types/dashboard';
-import { FiPlus, FiInbox, FiCheckCircle, FiX, FiTrash2, FiUpload, FiEdit2, FiCopy } from 'react-icons/fi';
+import { FiPlus, FiInbox, FiCheckCircle, FiX, FiTrash2, FiUpload, FiEdit2, FiCopy, FiFolder } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const Products: React.FC = () => {
@@ -12,6 +12,12 @@ export const Products: React.FC = () => {
 
   const [search, setSearch] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
+  const [activeTab, setActiveTab] = useState<'products' | 'categories'>('products');
+  const [categories] = useState([
+    { id: 1, name: 'Cement & Aggregates', status: 'Approved', products: 24 },
+    { id: 2, name: 'Steel & TMT', status: 'Approved', products: 12 },
+    { id: 3, name: 'Bricks & Blocks', status: 'Pending Approval', products: 0 },
+  ]);
   const [newName, setNewName] = useState('');
   const [newPrice, setNewPrice] = useState('');
   const [newQty, setNewQty] = useState('');
@@ -102,24 +108,56 @@ export const Products: React.FC = () => {
       {/* Title */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-parrys-charcoal font-serif">My Product Listings</h1>
-          <p className="text-xs text-parrys-muted mt-1 font-semibold">Manage wholesale inventory listings and view approval status.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-parrys-charcoal font-serif">
+            {activeTab === 'products' ? 'My Product Listings' : 'Category Management'}
+          </h1>
+          <p className="text-xs text-parrys-muted mt-1 font-semibold">
+            {activeTab === 'products' ? 'Manage wholesale inventory listings and view approval status.' : 'Manage categories you sell products under.'}
+          </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <button className="flex h-10 items-center justify-center gap-1.5 rounded-custom border border-parrys-surface-dim bg-white px-4 text-xs font-bold text-parrys-charcoal shadow-sm hover:border-parrys-terracotta hover:text-parrys-terracotta transition btn-transition">
-            <FiUpload className="h-4 w-4" />
-            <span className="hidden sm:inline">Bulk Upload CSV</span>
-          </button>
-          <button
-            onClick={() => setShowAddForm(true)}
-            className="flex h-10 items-center justify-center gap-1.5 rounded-custom bg-parrys-terracotta px-4 text-xs font-bold text-white shadow-sm hover:bg-parrys-terracotta-dark hover:shadow-md transition btn-transition"
-          >
-            <FiPlus className="h-4.5 w-4.5" />
-            <span>New Listing</span>
-          </button>
+          {activeTab === 'products' ? (
+            <>
+              <button className="flex h-10 items-center justify-center gap-1.5 rounded-custom border border-parrys-surface-dim bg-white px-4 text-xs font-bold text-parrys-charcoal shadow-sm hover:border-parrys-terracotta hover:text-parrys-terracotta transition btn-transition">
+                <FiUpload className="h-4 w-4" />
+                <span className="hidden sm:inline">Bulk Upload CSV</span>
+              </button>
+              <button
+                onClick={() => setShowAddForm(true)}
+                className="flex h-10 items-center justify-center gap-1.5 rounded-custom bg-parrys-terracotta px-4 text-xs font-bold text-white shadow-sm hover:bg-parrys-terracotta-dark hover:shadow-md transition btn-transition"
+              >
+                <FiPlus className="h-4.5 w-4.5" />
+                <span>New Listing</span>
+              </button>
+            </>
+          ) : (
+            <button className="flex h-10 items-center justify-center gap-1.5 rounded-custom bg-parrys-terracotta px-4 text-xs font-bold text-white shadow-sm hover:bg-parrys-terracotta-dark hover:shadow-md transition btn-transition">
+              <FiPlus className="h-4.5 w-4.5" />
+              <span>Request Category</span>
+            </button>
+          )}
         </div>
       </div>
+
+      {/* Tabs */}
+      <div className="flex border-b border-parrys-surface-dim">
+        <button
+          onClick={() => setActiveTab('products')}
+          className={`px-4 py-3 text-sm font-bold transition-colors ${activeTab === 'products' ? 'text-parrys-terracotta border-b-2 border-parrys-terracotta' : 'text-parrys-muted hover:text-parrys-charcoal'}`}
+        >
+          Products
+        </button>
+        <button
+          onClick={() => setActiveTab('categories')}
+          className={`px-4 py-3 text-sm font-bold transition-colors ${activeTab === 'categories' ? 'text-parrys-terracotta border-b-2 border-parrys-terracotta' : 'text-parrys-muted hover:text-parrys-charcoal'}`}
+        >
+          Categories
+        </button>
+      </div>
+
+      {activeTab === 'products' ? (
+        <>
 
       {/* Search & Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
@@ -210,6 +248,33 @@ export const Products: React.FC = () => {
                     <FiTrash2 className="h-3.5 w-3.5" />
                   </button>
                 </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+        </>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+          {categories.map((cat) => (
+            <div key={cat.id} className="rounded-custom border border-parrys-surface-dim bg-white p-5 space-y-3 shadow-sm hover:shadow-md hover:border-parrys-terracotta/40 transition btn-transition">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded bg-parrys-cream text-parrys-terracotta">
+                  <FiFolder className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-parrys-charcoal">{cat.name}</h3>
+                  <p className="text-[10px] font-medium text-parrys-muted">{cat.products} Active Products</p>
+                </div>
+              </div>
+              
+              <div className="pt-3 mt-1 border-t border-parrys-surface-dim/60 flex justify-between items-center">
+                <span className={`text-xs px-2 py-0.5 rounded font-bold uppercase tracking-wider border
+                  ${cat.status === 'Approved' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'}
+                `}>
+                  {cat.status}
+                </span>
+                <button className="text-xs font-semibold text-parrys-muted hover:text-parrys-terracotta transition">View Details</button>
               </div>
             </div>
           ))}
