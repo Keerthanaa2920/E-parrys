@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { 
   FiSearch, FiClipboard, FiPhoneCall, FiTruck, 
   FiArrowRight, FiCheckCircle, FiChevronDown, FiShield,
-  FiInfo, FiDollarSign, FiMapPin 
+  FiInfo, FiDollarSign, FiMapPin, FiFileText
 } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -80,20 +80,28 @@ const STEPS_DATA = [
 
 const FAQS_DATA = [
   {
-    q: "Why is there a minimum limit of 10 units per material item?",
-    a: "E-Parrys coordinates direct commercial shipments from manufacturer yards to construction sites. To guarantee wholesale rates and offset primary cargo truck logistics, a small order bound of 10 bags or tonnes is maintained."
+    q: "Why is there a minimum order limit of 10 units per material item?",
+    a: "E-Parrys coordinates direct commercial shipments straight from manufacturer depots (Birla Cement, Tata Tiscon, Kajaria, Asian Paints, etc.) to your construction site. Maintaining a 10-unit minimum per item guarantees factory wholesale pricing and optimizes heavy cargo transport across Chennai."
   },
   {
-    q: "How are freight and shipping charges calculated?",
-    a: "Freight is computed during the step 3 verification call. It is determined by the physical mileage between the nearest manufacturer depot and your site, lane width restrictions, and vehicle sizes. We offer direct-to-site routes without middleman distribution hubs."
+    q: "How does E-Parrys verify material quality and test compliance?",
+    a: "All listed manufacturers must upload chemical and structural laboratory test reports (conforming to OPC 53 Grade, Fe 550D TMT, and double charged vitrified standards) adhering to BIS/ISI codes. Quality compliance tags are viewable on our Material Explorer, and physical test slips accompany every delivery."
   },
   {
-    q: "Do I need to sign up to place an inquiry?",
-    a: "No profile registration is required for commercial inquiry submissions. You can build a cart, add delivery details, and submit. We seed a temporary local checkout session and coordinate details over the phone."
+    q: "Do I need an account to place an inquiry or track my orders?",
+    a: "No account registration is required to submit a commercial inquiry—you can simply share your Chennai site details and preferred dispatch date. However, logging in (or using our Quick Demo Login) unlocks your Customer Profile to track active quotes, RFQs, order history, and supplier SLA ratios."
   },
   {
-    q: "What payment structures do you support?",
-    a: "We support direct RTGS bank transfers, corporate debit cards, and standard commercial credit structures for verified construction entities (coordinated with the logistics deck during the call)."
+    q: "How are site delivery and freight charges managed in Chennai?",
+    a: "Our logistics desk calculates direct-route freight during the 2-hour confirmation call based on your target Metro yard location (Guindy, Adyar, Tambaram, etc.) and lane width restrictions. We coordinate same-day dispatches with digital weigh-bridge slips and e-way bill receipts."
+  },
+  {
+    q: "How can building material manufacturers and suppliers sell on E-Parrys?",
+    a: "Wholesale distributors and certified manufacturers can onboard via our Supplier Registration portal (/vendor-registration) with zero listing fees for the first 30 days. Sellers receive direct corporate developer RFQs with automated inventory and SLA performance tracking."
+  },
+  {
+    q: "What payment methods and GST tax credit structures are supported?",
+    a: "We support RTGS/NEFT direct bank transfers, corporate cards, and commercial credit terms for verified construction firms. All dispatches include 100% GST-compliant e-way invoices to ensure seamless Input Tax Credit (ITC) filing."
   }
 ];
 
@@ -106,7 +114,7 @@ export const HowItWorks: React.FC = () => {
   const [selectedYard, setSelectedYard] = useState('Guindy Metro Yard');
   const [callLogs, setCallLogs] = useState<string[]>(['Dialer standby. Ready to verify.']);
   const [isDialing, setIsDialing] = useState(false);
-  const [activePillar, setActivePillar] = useState<'depot' | 'index' | 'chennai'>('depot');
+  const [activePillar, setActivePillar] = useState<'depot' | 'index' | 'chennai' | 'billing'>('depot');
 
   const StepIcon = STEPS_DATA[activeStep].icon;
 
@@ -468,13 +476,13 @@ export const HowItWorks: React.FC = () => {
                       className="space-y-1"
                     >
                       <p className="text-2xl md:text-3xl font-extrabold font-mono text-parrys-terracotta tracking-tight leading-none">
-                        {activePillar === 'depot' ? '99.8%' : activePillar === 'index' ? '₹0' : '35 km'}
+                        {activePillar === 'depot' ? '99.8%' : activePillar === 'index' ? '₹0' : activePillar === 'chennai' ? '35 km' : '100%'}
                       </p>
                       <p className="text-[7.5px] font-extrabold uppercase tracking-widest text-slate-400 leading-none">
-                        {activePillar === 'depot' ? 'Compliance index' : activePillar === 'index' ? 'Middleman markups' : 'Shipping radius'}
+                        {activePillar === 'depot' ? 'Compliance index' : activePillar === 'index' ? 'Middleman markups' : activePillar === 'chennai' ? 'Shipping radius' : 'GST Billing Logs'}
                       </p>
                       <p className="text-[8px] text-slate-300 font-semibold leading-tight max-w-[125px] mx-auto pt-1 border-t border-white/5 mt-1">
-                        {activePillar === 'depot' ? 'Origin plant test logs checked.' : activePillar === 'index' ? 'No added distributor margins.' : 'Metropolitan cargo dispatches.'}
+                        {activePillar === 'depot' ? 'Origin plant test logs checked.' : activePillar === 'index' ? 'No added distributor margins.' : activePillar === 'chennai' ? 'Metropolitan cargo dispatches.' : 'Input Tax Credit compliance assured.'}
                       </p>
                     </motion.div>
                   </AnimatePresence>
@@ -540,6 +548,27 @@ export const HowItWorks: React.FC = () => {
                     activePillar === 'chennai' ? 'border-parrys-terracotta text-parrys-terracotta font-extrabold' : 'border-parrys-surface-dim text-parrys-muted'
                   }`}>
                     Chennai Wide
+                  </span>
+                </div>
+
+                {/* 4. GST Verified (9 o'clock) */}
+                <div 
+                  onMouseEnter={() => setActivePillar('billing')}
+                  className={`absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group cursor-pointer transition-all duration-300 z-30
+                    ${activePillar === 'billing' ? 'scale-105' : 'opacity-85 scale-95'}
+                  `}
+                >
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-md ${
+                    activePillar === 'billing' 
+                      ? 'bg-parrys-terracotta text-white ring-4 ring-parrys-terracotta/20 border-parrys-terracotta' 
+                      : 'bg-white text-parrys-terracotta border border-parrys-surface-dim group-hover:border-parrys-terracotta'
+                  }`}>
+                    <FiFileText className="h-5 w-5" />
+                  </div>
+                  <span className={`mt-1.5 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border bg-white/95 backdrop-blur shadow-sm ${
+                    activePillar === 'billing' ? 'border-parrys-terracotta text-parrys-terracotta font-extrabold' : 'border-parrys-surface-dim text-parrys-muted'
+                  }`}>
+                    GST Verified
                   </span>
                 </div>
 

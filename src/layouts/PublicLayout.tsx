@@ -63,7 +63,6 @@ export const PublicLayout: React.FC = () => {
     { name: 'Products', path: '/products' },
     { name: 'Categories', path: '/categories' },
     { name: 'How It Works', path: '/how-it-works' },
-    { name: 'Sell', path: '/vendor-registration' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' }
   ];
