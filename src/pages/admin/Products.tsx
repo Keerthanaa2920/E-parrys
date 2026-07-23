@@ -283,10 +283,10 @@ export const Products: React.FC<ProductsProps> = ({
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <Breadcrumb items={["Control Tower", "Catalogue Ledger"]} />
-          <h2 className="text-xl font-bold tracking-tight text-slate-100 sm:text-2xl mt-[-16px]">
+          <h2 className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl mt-[-16px]">
             Product Approval Ledger
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-gray-500 mt-1">
             Review listed materials proposals, verify specifications compliance, and trigger catalog approvals.
           </p>
         </div>
@@ -296,7 +296,7 @@ export const Products: React.FC<ProductsProps> = ({
           <button
             onClick={handleReload}
             disabled={syncSpinner}
-            className="flex h-10 items-center justify-center gap-1.5 rounded-xl border border-slate-700 bg-slate-900 px-4 text-xs font-semibold text-slate-355 hover:border-slate-650 hover:text-white disabled:opacity-50 transition"
+            className="flex h-10 items-center justify-center gap-1.5 rounded-xl border border-orange-200 bg-white px-4 text-xs font-semibold text-gray-600 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-600 disabled:opacity-50 transition shadow-sm"
           >
             <FiRefreshCw className={`h-4 w-4 ${syncSpinner ? 'animate-spin' : ''}`} />
             <span className="hidden sm:inline">Force Sync</span>
@@ -307,7 +307,7 @@ export const Products: React.FC<ProductsProps> = ({
               alert("Downloading master catalog database sheet (Mock)...");
               triggerToast("Catalog database sheet download initiated.");
             }}
-            className="flex h-10 items-center justify-center gap-1.5 rounded-xl border border-slate-700 bg-slate-900 px-4 text-xs font-semibold text-slate-355 hover:border-slate-650 hover:text-white transition"
+            className="flex h-10 items-center justify-center gap-1.5 rounded-xl border border-orange-200 bg-white px-4 text-xs font-semibold text-gray-600 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-600 transition shadow-sm"
           >
             <FiDownloadCloud className="h-4 w-4" />
             <span className="hidden sm:inline">Export XLS</span>
@@ -315,7 +315,7 @@ export const Products: React.FC<ProductsProps> = ({
 
           <button
             onClick={handleCreateOrder}
-            className="flex h-10 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-cyan-600 to-indigo-650 px-4 text-xs font-bold text-white shadow-lg hover:from-cyan-500 hover:to-indigo-550 transition"
+            className="flex h-10 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-4 text-xs font-bold text-white shadow-lg shadow-orange-500/20 hover:from-orange-400 hover:to-orange-500 transition"
           >
             <FiPlus className="h-4.5 w-4.5" />
             <span>Add Material</span>
@@ -343,8 +343,8 @@ export const Products: React.FC<ProductsProps> = ({
                 onChange={(val) => setFilters(prev => ({ ...prev, search: val }))} 
               />
               
-              <div className="text-xs text-slate-400">
-                Found <span className="font-semibold text-slate-200">{filteredAndSortedOrders.length}</span> matching product listings
+              <div className="text-xs text-gray-500">
+                Found <span className="font-semibold text-gray-900">{filteredAndSortedOrders.length}</span> matching product listings
               </div>
             </div>
 
@@ -399,9 +399,9 @@ export const Products: React.FC<ProductsProps> = ({
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
-            className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-xl border border-emerald-500/20 bg-slate-950/95 px-4 py-3 text-xs font-semibold text-slate-200 shadow-2xl backdrop-blur-md"
+            className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-xl border border-emerald-200 bg-white/95 px-4 py-3 text-xs font-semibold text-gray-800 shadow-2xl backdrop-blur-md"
           >
-            <FiCheckCircle className="h-4.5 w-4.5 text-emerald-450" />
+            <FiCheckCircle className="h-4.5 w-4.5 text-emerald-500" />
             <span>{toastMessage}</span>
           </motion.div>
         )}

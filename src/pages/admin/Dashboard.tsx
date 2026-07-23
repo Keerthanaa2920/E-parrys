@@ -34,8 +34,8 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-100">Marketplace Admin Tower</h1>
-        <p className="text-xs text-slate-400 mt-1">Global audit ledger, listing approvals, and wholesale onboarding control center.</p>
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900">Marketplace Admin Tower</h1>
+        <p className="text-xs text-gray-500 mt-1">Global audit ledger, listing approvals, and wholesale onboarding control center.</p>
       </div>
 
       {/* Stats Cards */}
@@ -43,15 +43,15 @@ export const Dashboard: React.FC = () => {
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <div key={stat.title} className="rounded-xl border border-[var(--color-brand-border)] bg-[#0f172a]/65 p-5 space-y-3 shadow-md">
+            <div key={stat.title} className="rounded-xl border border-orange-100 bg-white p-5 space-y-3 shadow-sm hover:shadow-md transition">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{stat.title}</span>
-                <div className={`rounded-lg bg-slate-900 border border-slate-800 p-2 ${stat.color}`}>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500">{stat.title}</span>
+                <div className={`rounded-lg bg-orange-50 border border-orange-100 p-2 ${stat.color}`}>
                   <Icon className="h-5 w-5" />
                 </div>
               </div>
-              <p className="text-xl font-bold text-slate-100 tracking-tight">{stat.value}</p>
-              <p className="text-[10px] text-slate-500">{stat.desc}</p>
+              <p className="text-xl font-bold text-gray-900 tracking-tight">{stat.value}</p>
+              <p className="text-[10px] text-gray-400">{stat.desc}</p>
             </div>
           );
         })}
@@ -59,21 +59,21 @@ export const Dashboard: React.FC = () => {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Recent Onboarding */}
-        <div className="rounded-xl border border-[var(--color-brand-border)] bg-[#0f172a]/40 p-5 space-y-4">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-2">
+        <div className="rounded-xl border border-orange-100 bg-white p-5 space-y-4 shadow-sm">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-gray-600 border-b border-orange-100 pb-2">
             Recent Supplier Onboardings
           </h3>
 
           <div className="space-y-3">
             {recentVendors.map((vnd, idx) => (
-              <div key={idx} className="flex items-center justify-between rounded-lg border border-slate-900 bg-slate-950/40 p-3">
+              <div key={idx} className="flex items-center justify-between rounded-lg border border-orange-50 bg-white shadow-sm p-3 hover:border-orange-200 transition">
                 <div className="space-y-0.5">
-                  <h4 className="text-xs font-bold text-slate-200">{vnd.name}</h4>
-                  <p className="text-[10px] text-slate-500">{vnd.email} | Sector: {vnd.category}</p>
+                  <h4 className="text-xs font-bold text-gray-900">{vnd.name}</h4>
+                  <p className="text-[10px] text-gray-500">{vnd.email} | Sector: {vnd.category}</p>
                 </div>
                 <div className="text-right space-y-0.5 shrink-0">
-                  <span className="block text-[10px] text-slate-455 font-mono">{vnd.date}</span>
-                  <span className="inline-block rounded bg-emerald-950 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 text-[9px] font-semibold">
+                  <span className="block text-[10px] text-gray-400 font-mono">{vnd.date}</span>
+                  <span className="inline-block rounded bg-emerald-50 text-emerald-600 border border-emerald-200 px-1.5 py-0.5 text-[9px] font-semibold">
                     {vnd.status}
                   </span>
                 </div>
@@ -83,22 +83,22 @@ export const Dashboard: React.FC = () => {
         </div>
 
         {/* Global audit warning notifications */}
-        <div className="rounded-xl border border-[var(--color-brand-border)] bg-[#0f172a]/40 p-5 space-y-4">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-2">
+        <div className="rounded-xl border border-orange-100 bg-white p-5 space-y-4 shadow-sm">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-gray-600 border-b border-orange-100 pb-2">
             System Operations Log
           </h3>
           
-          <div className="space-y-3 text-xs text-slate-400 leading-normal">
-            <div className="rounded-lg bg-amber-955/10 border border-amber-500/10 p-3 flex items-start gap-2.5">
+          <div className="space-y-3 text-xs text-gray-600 leading-normal">
+            <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 flex items-start gap-2.5">
               <span className="h-2 w-2 rounded-full bg-amber-500 shrink-0 mt-1.5 animate-pulse" />
               <p>Product Listing <strong>SH-MP-003</strong> requires chemical test certifications check before approved live state.</p>
             </div>
-            <div className="rounded-lg bg-slate-900 border border-slate-800 p-3 flex items-start gap-2.5">
+            <div className="rounded-lg bg-orange-50 border border-orange-100 p-3 flex items-start gap-2.5">
               <span className="h-2 w-2 rounded-full bg-cyan-500 shrink-0 mt-1.5" />
-              <p>Supplier <strong>Birla Cement Hub</strong> stock sync complete. Updated stock counts across 3 items.</p>
+              <p>Supplier <strong className="text-gray-900">Birla Cement Hub</strong> stock sync complete. Updated stock counts across 3 items.</p>
             </div>
-            <div className="rounded-lg bg-slate-900 border border-slate-800 p-3 flex items-start gap-2.5">
-              <span className="h-2 w-2 rounded-full bg-slate-500 shrink-0 mt-1.5" />
+            <div className="rounded-lg bg-white border border-orange-100 shadow-sm p-3 flex items-start gap-2.5">
+              <span className="h-2 w-2 rounded-full bg-gray-400 shrink-0 mt-1.5" />
               <p>Platform billing reconciliation audit for Q2 completed. Total trade value matches database ledgers.</p>
             </div>
           </div>

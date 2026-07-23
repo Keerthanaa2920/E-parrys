@@ -20,9 +20,9 @@ import { VendorLayout } from '../layouts/VendorLayout';
 import { AdminLayout } from '../layouts/AdminLayout';
 
 // Vendor Portal Pages
+import { VendorLogin } from '../pages/vendor/Login';
 import { Dashboard as VendorDashboard } from '../pages/vendor/Dashboard';
 import { Products as VendorProducts } from '../pages/vendor/Products';
-import { Categories as VendorCategories } from '../pages/vendor/Categories';
 import { Inventory as VendorInventory } from '../pages/vendor/Inventory';
 import { Orders as VendorOrders } from '../pages/vendor/Orders';
 import { Enquiries as VendorEnquiries } from '../pages/vendor/Enquiries';
@@ -32,11 +32,13 @@ import { Notifications as VendorNotifications } from '../pages/vendor/Notificati
 import { Settings as VendorSettings } from '../pages/vendor/Settings';
 
 // Admin Portal Pages
+import { AdminLogin } from '../pages/admin/Login';
 import { Dashboard as AdminDashboard } from '../pages/admin/Dashboard';
 import { Vendors as AdminVendors } from '../pages/admin/Vendors';
 import { Products as AdminProducts } from '../pages/admin/Products';
 import { Categories as AdminCategories } from '../pages/admin/Categories';
 import { Reports as AdminReports } from '../pages/admin/Reports';
+import { Inventory as AdminInventory } from '../pages/admin/Inventory';
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -55,10 +57,10 @@ export const AppRoutes: React.FC = () => {
 </Route>
 
 {/* Vendor Portal routes */ }
+<Route path="/vendor-login" element={<VendorLogin />} />
 <Route element={<VendorLayout />}>
   <Route path="/vendor" element={<VendorDashboard />} />
   <Route path="/vendor/products" element={<VendorProducts />} />
-  <Route path="/vendor/categories" element={<VendorCategories />} />
   <Route path="/vendor/inventory" element={<VendorInventory />} />
   <Route path="/vendor/orders" element={<VendorOrders />} />
   <Route path="/vendor/enquiries" element={<VendorEnquiries />} />
@@ -69,6 +71,7 @@ export const AppRoutes: React.FC = () => {
 </Route>
 
 {/* Admin Operations routes */ }
+<Route path="/admin-login" element={<AdminLogin />} />
 <Route
   element={
     <AdminLayout
@@ -81,6 +84,7 @@ export const AppRoutes: React.FC = () => {
   <Route path="/admin" element={<AdminDashboard />} />
   <Route path="/admin/vendors" element={<AdminVendors />} />
   <Route path="/admin/products" element={<AdminProducts viewState="data" setViewState={() => { }} />} />
+  <Route path="/admin/inventory" element={<AdminInventory />} />
   <Route path="/admin/categories" element={<AdminCategories />} />
   <Route path="/admin/reports" element={<AdminReports />} />
 </Route>

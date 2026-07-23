@@ -38,16 +38,16 @@ export const Vendors: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-100">Marketplace Suppliers</h1>
-        <p className="text-xs text-slate-400 mt-1">Review vendor credentials, GST validations, and verification status.</p>
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900">Marketplace Suppliers</h1>
+        <p className="text-xs text-gray-500 mt-1">Review vendor credentials, GST validations, and verification status.</p>
       </div>
 
       {/* Vendors Table */}
-      <div className="rounded-xl border border-[var(--color-brand-border)] bg-[#0f172a]/65 overflow-hidden">
+      <div className="rounded-xl border border-orange-100 bg-white overflow-hidden shadow-sm">
         <div className="w-full overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-900/60 border-b border-[var(--color-brand-border)] text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              <tr className="bg-orange-50/50 border-b border-orange-100 text-[10px] font-bold uppercase tracking-wider text-gray-500">
                 <th className="py-3.5 px-4">Supplier ID</th>
                 <th className="py-3.5 px-4">Company Name</th>
                 <th className="py-3.5 px-4">Contact Info</th>
@@ -57,14 +57,14 @@ export const Vendors: React.FC = () => {
                 <th className="py-3.5 px-4 text-right w-44">Operations</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/40 text-xs text-slate-300">
+            <tbody className="divide-y divide-orange-50 text-xs text-gray-700">
               {vendors.map((vnd) => (
-                <tr key={vnd.id} className="hover:bg-slate-900/30 transition">
-                  <td className="py-3 px-4 font-mono font-semibold text-[var(--color-brand-cyan)]">{vnd.id}</td>
+                <tr key={vnd.id} className="hover:bg-orange-50/30 transition">
+                  <td className="py-3 px-4 font-mono font-semibold text-orange-600">{vnd.id}</td>
                   <td className="py-3 px-4">
                     <div className="flex flex-col">
-                      <span className="font-semibold text-slate-200">{vnd.name}</span>
-                      <span className="text-[10px] text-slate-500 flex items-center gap-1">
+                      <span className="font-semibold text-gray-900">{vnd.name}</span>
+                      <span className="text-[10px] text-gray-500 flex items-center gap-1">
                         <FiMapPin className="h-3 w-3 shrink-0" />
                         {vnd.warehouse}
                       </span>
@@ -72,18 +72,18 @@ export const Vendors: React.FC = () => {
                   </td>
                   <td className="py-3 px-4">
                     <div className="flex flex-col">
-                      <span className="text-slate-300">{vnd.email}</span>
-                      <span className="text-[10px] text-slate-500">{vnd.phone}</span>
+                      <span className="text-gray-700">{vnd.email}</span>
+                      <span className="text-[10px] text-gray-500">{vnd.phone}</span>
                     </div>
                   </td>
-                  <td className="py-3 px-4 font-mono font-semibold text-slate-400">{vnd.gstin}</td>
-                  <td className="py-3 px-4 text-center font-bold text-slate-300">{vnd.listingCount}</td>
+                  <td className="py-3 px-4 font-mono font-semibold text-gray-500">{vnd.gstin}</td>
+                  <td className="py-3 px-4 text-center font-bold text-gray-700">{vnd.listingCount}</td>
                   
                   <td className="py-3 px-4 text-center">
                     <span className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-medium border
-                      ${vnd.status === 'verified' ? 'bg-emerald-950/20 text-emerald-400 border-emerald-500/20' : ''}
-                      ${vnd.status === 'pending' ? 'bg-amber-950/20 text-amber-450 border-amber-500/20 animate-pulse' : ''}
-                      ${vnd.status === 'review' ? 'bg-cyan-950/20 text-cyan-455 border-cyan-500/20' : ''}
+                      ${vnd.status === 'verified' ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : ''}
+                      ${vnd.status === 'pending' ? 'bg-amber-50 text-amber-600 border-amber-200 animate-pulse' : ''}
+                      ${vnd.status === 'review' ? 'bg-orange-50 text-orange-600 border-orange-200' : ''}
                     `}>
                       <span className="capitalize">{vnd.status}</span>
                     </span>
@@ -94,7 +94,7 @@ export const Vendors: React.FC = () => {
                       {vnd.status !== 'verified' && (
                         <button
                           onClick={() => handleToggleStatus(vnd.id, 'verified')}
-                          className="flex items-center gap-1 rounded border border-slate-700 bg-slate-900 px-2 py-1 text-[10px] font-semibold text-emerald-450 hover:border-emerald-500/30 hover:bg-emerald-950/10 transition focus:outline-none"
+                          className="flex items-center gap-1 rounded border border-orange-200 bg-white px-2 py-1 text-[10px] font-semibold text-emerald-600 hover:border-emerald-300 hover:bg-emerald-50 transition focus:outline-none shadow-sm"
                           title="Verify Supplier"
                         >
                           <FiCheckCircle className="h-3 w-3" />
@@ -105,7 +105,7 @@ export const Vendors: React.FC = () => {
                       {vnd.status === 'verified' && (
                         <button
                           onClick={() => handleToggleStatus(vnd.id, 'review')}
-                          className="flex items-center gap-1 rounded border border-slate-750 bg-slate-900 px-2 py-1 text-[10px] font-semibold text-amber-450 hover:border-amber-500/30 hover:bg-amber-950/10 transition focus:outline-none"
+                          className="flex items-center gap-1 rounded border border-orange-200 bg-white px-2 py-1 text-[10px] font-semibold text-orange-600 hover:border-orange-300 hover:bg-orange-50 transition focus:outline-none shadow-sm"
                           title="Flag Supplier for Review"
                         >
                           <FiShield className="h-3 w-3" />
@@ -128,9 +128,9 @@ export const Vendors: React.FC = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-xl border border-emerald-500/20 bg-slate-950 px-4 py-3 text-xs font-semibold text-slate-200 shadow-2xl"
+            className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-xl border border-emerald-200 bg-white px-4 py-3 text-xs font-semibold text-gray-800 shadow-2xl"
           >
-            <FiCheckCircle className="h-4.5 w-4.5 text-emerald-400" />
+            <FiCheckCircle className="h-4.5 w-4.5 text-emerald-500" />
             <span>{toast}</span>
           </motion.div>
         )}
