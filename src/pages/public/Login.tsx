@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiMail, FiLock, FiLogIn, FiCheckCircle, FiUser, FiBriefcase } from 'react-icons/fi';
+import { FiMail, FiLock, FiLogIn, FiCheckCircle, FiUser } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const GoogleIcon = () => (
@@ -13,7 +13,6 @@ const GoogleIcon = () => (
 );
 
 export const Login: React.FC = () => {
-  const [loginType, setLoginType] = useState<'retail' | 'vendor'>('retail');
   const [emailOrMobile, setEmailOrMobile] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ emailOrMobile?: string; password?: string }>({});
@@ -57,18 +56,13 @@ export const Login: React.FC = () => {
     if (!validateForm()) return;
 
     setToast(true);
-    const savedLoginType = loginType;
     setEmailOrMobile('');
     setPassword('');
     setErrors({});
 
     setTimeout(() => {
       setToast(false);
-      if (savedLoginType === 'vendor') {
-        navigate('/vendor');
-      } else {
-        navigate('/');
-      }
+      navigate('/');
     }, 2000);
   };
 
@@ -77,11 +71,26 @@ export const Login: React.FC = () => {
     setToast(true);
     setTimeout(() => {
       setToast(false);
-      if (loginType === 'vendor') {
-        navigate('/vendor');
-      } else {
-        navigate('/');
-      }
+      navigate('/');
+    }, 1500);
+  };
+
+  const handleDemoLogin = () => {
+    setToast(true);
+    localStorage.setItem('eparrys_auth_token', 'jwt-mock-token-secret-xyz-123');
+    const mockUser = {
+      name: 'Ramanathan K',
+      email: 'customer@parrys.com',
+      companyName: 'Shan Constructions',
+      phone: '9876543210',
+      address: 'No.135 A Block, Thanikachalam Nagar, 80FT Road, Ponniammanmedu, Chennai-600110',
+      role: 'client'
+    };
+    localStorage.setItem('eparrys_user', JSON.stringify(mockUser));
+
+    setTimeout(() => {
+      setToast(false);
+      navigate('/profile');
     }, 1500);
   };
 
@@ -113,47 +122,11 @@ export const Login: React.FC = () => {
             E-Parrys B2B Hub
           </span>
           <h2 className="text-3xl font-bold tracking-tight text-parrys-charcoal font-serif">
-            {loginType === 'vendor' ? 'Wholesale Vendor Login' : 'Customer Login'}
+            Login
           </h2>
           <p className="text-xs text-parrys-muted leading-relaxed font-semibold">
-            Access your customized sourcing catalog or seller desk
+            Access your customized sourcing catalog
           </p>
-        </div>
-
-        {/* Customer vs Wholesale Vendor Switcher */}
-        <div className="grid grid-cols-2 p-1 bg-parrys-cream border border-parrys-surface-dim/40 rounded-custom relative z-10">
-          <button
-            type="button"
-            onClick={() => {
-              setLoginType('retail');
-              setErrors({});
-            }}
-            className={`flex items-center justify-center gap-2 py-2.5 text-xs font-bold uppercase tracking-wider rounded-custom transition-all duration-300 cursor-pointer
-              ${loginType === 'retail'
-                ? 'bg-parrys-terracotta text-white shadow-md'
-                : 'text-parrys-muted hover:text-parrys-charcoal'
-              }
-            `}
-          >
-            <FiUser className="h-4 w-4" />
-            <span>Customer Login</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setLoginType('vendor');
-              setErrors({});
-            }}
-            className={`flex items-center justify-center gap-2 py-2.5 text-xs font-bold uppercase tracking-wider rounded-custom transition-all duration-300 cursor-pointer
-              ${loginType === 'vendor'
-                ? 'bg-parrys-terracotta text-white shadow-md'
-                : 'text-parrys-muted hover:text-parrys-charcoal'
-              }
-            `}
-          >
-            <FiBriefcase className="h-4 w-4" />
-            <span>Vendor Login</span>
-          </button>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4 relative z-10">
@@ -169,7 +142,7 @@ export const Login: React.FC = () => {
                   setEmailOrMobile(e.target.value);
                   if (errors.emailOrMobile) setErrors(prev => ({ ...prev, emailOrMobile: undefined }));
                 }}
-                placeholder={loginType === 'vendor' ? 'corporate@company.com or 9876543210' : 'customer@email.com or 9876543210'}
+                placeholder="customer@email.com or 9876543210"
                 className={`w-full rounded-custom border bg-white pl-10 pr-3 py-3 text-xs font-semibold text-parrys-charcoal placeholder-slate-400 focus:ring-2 focus:ring-parrys-terracotta/5 focus:outline-none transition-all duration-300 ${
                   errors.emailOrMobile ? 'border-red-500 focus:border-red-500' : 'border-parrys-surface-dim/70 focus:border-parrys-terracotta'
                 }`}
@@ -217,7 +190,7 @@ export const Login: React.FC = () => {
             className="flex w-full items-center justify-center gap-2 rounded-custom bg-parrys-terracotta py-3.5 text-xs font-bold uppercase tracking-widest text-white shadow-lg hover:bg-parrys-terracotta-dark hover:scale-[1.01] transition-all duration-300 shadow-parrys-terracotta/10 cursor-pointer mt-2"
           >
             <FiLogIn className="h-4.5 w-4.5" />
-            <span>Sign In as {loginType === 'vendor' ? 'Vendor' : 'Customer'}</span>
+            <span>Sign In</span>
           </button>
         </form>
 
@@ -236,11 +209,26 @@ export const Login: React.FC = () => {
           <span>Continue with Google</span>
         </button>
 
+        <div className="relative flex py-1 items-center z-10">
+          <div className="flex-grow border-t border-parrys-surface-dim/40"></div>
+          <span className="flex-shrink mx-4 text-[9px] font-bold text-parrys-muted uppercase tracking-wider">Demo Access</span>
+          <div className="flex-grow border-t border-parrys-surface-dim/40"></div>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleDemoLogin}
+          className="flex w-full items-center justify-center gap-2 rounded-custom bg-emerald-600 hover:bg-emerald-700 py-3 text-xs font-bold uppercase tracking-widest text-white transition-all duration-300 cursor-pointer z-10 shadow-md hover:scale-[1.01]"
+        >
+          <FiUser className="h-4.5 w-4.5" />
+          <span>Quick Demo Login</span>
+        </button>
+
         <div className="text-center pt-2 border-t border-parrys-surface-dim/20 z-10 relative">
           <p className="text-xs text-parrys-muted font-semibold">
             Don't have an account?{' '}
             <Link
-              to="/vendor-registration"
+              to="/vendor-registration?role=customer"
               className="text-parrys-terracotta hover:underline font-bold uppercase tracking-wider text-[10px]"
             >
               Sign Up
@@ -260,7 +248,7 @@ export const Login: React.FC = () => {
           >
             <FiCheckCircle className="h-4.5 w-4.5 text-emerald-400" />
             <span>
-              {loginType === 'vendor' ? 'Vendor Desk' : 'Customer Profile'} authorized. Redirecting...
+              Customer Profile authorized. Redirecting...
             </span>
           </motion.div>
         )}

@@ -14,6 +14,8 @@ import { Contact } from '../pages/public/Contact';
 import { Brands } from '../pages/public/Brands';
 import { Login } from '../pages/public/Login';
 import { VendorRegistration } from '../pages/public/VendorRegistration';
+import { Profile as CustomerProfile } from '../pages/public/Profile';
+import { HowItWorks } from '../pages/public/HowItWorks';
 
 // Portals
 import { VendorLayout } from '../layouts/VendorLayout';
@@ -52,6 +54,8 @@ export const AppRoutes: React.FC = () => {
   <Route path="/contact" element={<Contact />} />
   <Route path="/login" element={<Login />} />
   <Route path="/vendor-registration" element={<VendorRegistration />} />
+  <Route path="/profile" element={<CustomerProfile />} />
+  <Route path="/how-it-works" element={<HowItWorks />} />
 </Route>
 
 {/* Vendor Portal routes */ }
