@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { 
   FiGrid, FiShoppingBag, FiPackage, FiList, 
-  FiUser, FiArrowLeft, FiMenu, FiBell, 
+  FiUser, FiMenu, FiBell, 
   FiChevronDown, FiLogOut, FiSettings,
   FiMessageSquare, FiPieChart
 } from 'react-icons/fi';
@@ -98,16 +98,7 @@ export const VendorLayout: React.FC = () => {
             );
           })}
           
-          <div className="h-px bg-parrys-surface-dim/50 my-4" />
-          
-          {/* Back to main marketplace */}
-          <Link
-            to="/"
-            className="flex items-center gap-3 rounded-custom px-3 py-2.5 text-sm font-semibold text-parrys-muted hover:bg-parrys-surface-dim/10 hover:text-parrys-charcoal group btn-transition"
-          >
-            <FiArrowLeft className="h-4.5 w-4.5 text-parrys-muted group-hover:text-parrys-charcoal transition" />
-            {sidebarOpen && <span>Marketplace</span>}
-          </Link>
+
         </nav>
       </aside>
 

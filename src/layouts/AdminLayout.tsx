@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   FiGrid, FiUsers, FiCheckSquare, FiFolder,
-  FiPieChart, FiArrowLeft, FiMenu, FiBox,
+  FiPieChart, FiMenu, FiBox,
   FiChevronDown, FiRefreshCw, FiLogOut, FiUserCheck
 } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -105,16 +105,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             );
           })}
 
-          <div className="h-px bg-orange-100 my-4" />
 
-          {/* Back to main marketplace */}
-          <Link
-            to="/"
-            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-bold uppercase tracking-wider text-gray-500 hover:bg-orange-50/50 hover:text-gray-900 group"
-          >
-            <FiArrowLeft className="h-4.5 w-4.5 text-gray-400 group-hover:text-gray-600 transition" />
-            {sidebarOpen && <span>Marketplace</span>}
-          </Link>
         </nav>
 
         {/* Admin Stats */}

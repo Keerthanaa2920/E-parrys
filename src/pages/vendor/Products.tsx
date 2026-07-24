@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 export const Products: React.FC = () => {
   const vendorName = "Birla Cement Hub";
-  const [products, setProducts] = useState<IMarketplaceItem[]>(() => 
+  const [products, setProducts] = useState<IMarketplaceItem[]>(() =>
     mockDbService.getProducts().filter(p => p.vendorName === vendorName)
   );
 
@@ -23,7 +23,8 @@ export const Products: React.FC = () => {
   const [newQty, setNewQty] = useState('');
   const [newGrade, setNewGrade] = useState('');
   const [newSku, setNewSku] = useState('');
-  
+  const [newCategory, setNewCategory] = useState('Cement & Aggregates');
+
   // New bulk material properties
   const [newUnitMeasure, setNewUnitMeasure] = useState<IMarketplaceItem['unitMeasure']>('bags');
   const [newMinOrderQty, setNewMinOrderQty] = useState('10');
@@ -35,7 +36,7 @@ export const Products: React.FC = () => {
   const filteredProducts = useMemo(() => {
     if (!search.trim()) return products;
     const q = search.toLowerCase();
-    return products.filter(p => 
+    return products.filter(p =>
       p.productName.toLowerCase().includes(q) ||
       p.sku.toLowerCase().includes(q)
     );
@@ -69,7 +70,7 @@ export const Products: React.FC = () => {
       status: 'pending',
       amount: parseFloat(newPrice),
       priority: 'medium',
-      category: 'Cement & Aggregates',
+      category: newCategory,
       stockStatus: 'in-stock',
       sku: newSku.startsWith('SKU-') ? newSku : `SKU-${newSku}-MP`,
       warehouse: 'Chennai Main Yard',
@@ -82,16 +83,17 @@ export const Products: React.FC = () => {
     };
 
     mockDbService.addProduct(newPrd);
-    
+
     // Refresh state
     setProducts(mockDbService.getProducts().filter(p => p.vendorName === vendorName));
     setShowAddForm(false);
-    
+
     setNewName('');
     setNewPrice('');
     setNewQty('');
     setNewGrade('');
     setNewSku('');
+    setNewCategory('Cement & Aggregates');
     setNewUnitMeasure('bags');
     setNewMinOrderQty('10');
     setNewPincodes('');
@@ -159,100 +161,100 @@ export const Products: React.FC = () => {
       {activeTab === 'products' ? (
         <>
 
-      {/* Search & Filters */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="w-full sm:max-w-md">
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by product name or SKU..."
-            className="w-full rounded-custom border border-parrys-surface-dim bg-white px-4 py-2 text-xs text-parrys-charcoal placeholder-parrys-muted focus:border-parrys-terracotta focus:outline-none focus:ring-1 focus:ring-parrys-terracotta/20 transition shadow-sm"
-          />
-        </div>
-        <select 
-          className="rounded-custom border border-parrys-surface-dim bg-white px-4 py-2 text-xs font-bold text-parrys-charcoal focus:border-parrys-terracotta focus:outline-none cursor-pointer shadow-sm"
-        >
-          <option value="all">All Statuses</option>
-          <option value="approved">Approved</option>
-          <option value="pending">Pending</option>
-          <option value="review">In Review</option>
-          <option value="rejected">Rejected</option>
-        </select>
-      </div>
-
-      {/* Grid list */}
-      {filteredProducts.length === 0 ? (
-        <div className="flex min-h-[300px] flex-col items-center justify-center text-center bg-white border border-parrys-surface-dim rounded-custom border-dashed">
-          <FiInbox className="h-10 w-10 text-parrys-muted mb-4 opacity-50" />
-          <h3 className="text-sm font-bold text-parrys-charcoal">No Listings Matched</h3>
-          <p className="text-xs text-parrys-muted max-w-sm mt-1">Try adding a new material product listing to get started.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredProducts.map((prd) => (
-            <div
-              key={prd.id}
-              className="flex flex-col rounded-custom border border-parrys-surface-dim bg-white p-5 justify-between hover:border-parrys-terracotta/40 hover:shadow-md transition relative overflow-hidden btn-transition shadow-sm"
+          {/* Search & Filters */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <div className="w-full sm:max-w-md">
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by product name or SKU..."
+                className="w-full rounded-custom border border-parrys-surface-dim bg-white px-4 py-2 text-xs text-parrys-charcoal placeholder-parrys-muted focus:border-parrys-terracotta focus:outline-none focus:ring-1 focus:ring-parrys-terracotta/20 transition shadow-sm"
+              />
+            </div>
+            <select
+              className="rounded-custom border border-parrys-surface-dim bg-white px-4 py-2 text-xs font-bold text-parrys-charcoal focus:border-parrys-terracotta focus:outline-none cursor-pointer shadow-sm"
             >
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-[10px] font-bold text-parrys-muted">
-                  <span className="font-mono text-parrys-terracotta">{prd.sku}</span>
-                  <span className={`inline-flex items-center gap-1 rounded px-1.5 py-0.5 font-bold uppercase tracking-wider border
+              <option value="all">All Statuses</option>
+              <option value="approved">Approved</option>
+              <option value="pending">Pending</option>
+              <option value="review">In Review</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+
+          {/* Grid list */}
+          {filteredProducts.length === 0 ? (
+            <div className="flex min-h-[300px] flex-col items-center justify-center text-center bg-white border border-parrys-surface-dim rounded-custom border-dashed">
+              <FiInbox className="h-10 w-10 text-parrys-muted mb-4 opacity-50" />
+              <h3 className="text-sm font-bold text-parrys-charcoal">No Listings Matched</h3>
+              <p className="text-xs text-parrys-muted max-w-sm mt-1">Try adding a new material product listing to get started.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {filteredProducts.map((prd) => (
+                <div
+                  key={prd.id}
+                  className="flex flex-col rounded-custom border border-parrys-surface-dim bg-white p-5 justify-between hover:border-parrys-terracotta/40 hover:shadow-md transition relative overflow-hidden btn-transition shadow-sm"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between text-[10px] font-bold text-parrys-muted">
+                      <span className="font-mono text-parrys-terracotta">{prd.sku}</span>
+                      <span className={`inline-flex items-center gap-1 rounded px-1.5 py-0.5 font-bold uppercase tracking-wider border
                     ${prd.status === 'approved' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : ''}
                     ${prd.status === 'pending' ? 'bg-amber-50 text-amber-700 border-amber-200' : ''}
                     ${prd.status === 'review' ? 'bg-blue-50 text-blue-700 border-blue-200' : ''}
                     ${prd.status === 'cancelled' ? 'bg-red-50 text-red-700 border-red-200' : ''}
                   `}>
-                    {prd.status}
-                  </span>
-                </div>
-
-                <h3 className="text-sm font-bold text-parrys-charcoal">{prd.productName}</h3>
-                
-                <div className="flex flex-col gap-1.5 text-xs text-parrys-muted bg-parrys-cream/50 p-2.5 rounded border border-parrys-surface-dim/40">
-                  <div className="flex justify-between">
-                    <span>Stock:</span>
-                    <span className="font-bold text-parrys-charcoal">{prd.quantity} {prd.unitMeasure || 'units'}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>MOQ:</span>
-                    <span className="font-bold text-parrys-charcoal">{prd.minOrderQty || 1} {prd.unitMeasure || 'units'}</span>
-                  </div>
-                  {prd.pricingTiers && prd.pricingTiers.length > 0 && (
-                    <div className="flex justify-between pt-1.5 mt-1.5 border-t border-parrys-surface-dim/50">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">Bulk Offer:</span>
-                      <span className="font-mono font-bold text-emerald-600">
-                        ₹{Math.min(...prd.pricingTiers.map(t => t.price)).toLocaleString('en-IN')} (max discount)
+                        {prd.status}
                       </span>
                     </div>
-                  )}
-                </div>
-              </div>
 
-              <div className="flex flex-col mt-4">
-                <div className="flex items-center justify-between border-t border-parrys-surface-dim/60 pt-3 pb-3 text-sm font-mono font-bold text-parrys-charcoal">
-                  <span>₹{prd.amount.toLocaleString('en-IN')}</span>
-                  <span className="text-[10px] text-parrys-muted font-sans font-medium">{prd.date}</span>
+                    <h3 className="text-sm font-bold text-parrys-charcoal">{prd.productName}</h3>
+
+                    <div className="flex flex-col gap-1.5 text-xs text-parrys-muted bg-parrys-cream/50 p-2.5 rounded border border-parrys-surface-dim/40">
+                      <div className="flex justify-between">
+                        <span>Stock:</span>
+                        <span className="font-bold text-parrys-charcoal">{prd.quantity} {prd.unitMeasure || 'units'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>MOQ:</span>
+                        <span className="font-bold text-parrys-charcoal">{prd.minOrderQty || 1} {prd.unitMeasure || 'units'}</span>
+                      </div>
+                      {prd.pricingTiers && prd.pricingTiers.length > 0 && (
+                        <div className="flex justify-between pt-1.5 mt-1.5 border-t border-parrys-surface-dim/50">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">Bulk Offer:</span>
+                          <span className="font-mono font-bold text-emerald-600">
+                            ₹{Math.min(...prd.pricingTiers.map(t => t.price)).toLocaleString('en-IN')} (max discount)
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col mt-4">
+                    <div className="flex items-center justify-between border-t border-parrys-surface-dim/60 pt-3 pb-3 text-sm font-mono font-bold text-parrys-charcoal">
+                      <span>₹{prd.amount.toLocaleString('en-IN')}</span>
+                      <span className="text-[10px] text-parrys-muted font-sans font-medium">{prd.date}</span>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex items-center gap-2">
+                      <button className="flex-1 flex justify-center items-center gap-1 bg-parrys-cream border border-parrys-surface-dim text-parrys-charcoal text-[10px] font-bold uppercase py-1.5 rounded hover:bg-white hover:border-parrys-terracotta transition cursor-pointer">
+                        <FiEdit2 className="h-3 w-3" /> Edit
+                      </button>
+                      <button className="flex-1 flex justify-center items-center gap-1 bg-parrys-cream border border-parrys-surface-dim text-parrys-charcoal text-[10px] font-bold uppercase py-1.5 rounded hover:bg-white hover:border-parrys-terracotta transition cursor-pointer">
+                        <FiCopy className="h-3 w-3" /> Duplicate
+                      </button>
+                      <button className="flex justify-center items-center bg-rose-50 border border-rose-100 text-rose-500 text-[10px] py-1.5 px-3 rounded hover:bg-rose-500 hover:text-white transition cursor-pointer">
+                        <FiTrash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                
-                {/* Action Buttons */}
-                <div className="flex items-center gap-2">
-                  <button className="flex-1 flex justify-center items-center gap-1 bg-parrys-cream border border-parrys-surface-dim text-parrys-charcoal text-[10px] font-bold uppercase py-1.5 rounded hover:bg-white hover:border-parrys-terracotta transition cursor-pointer">
-                    <FiEdit2 className="h-3 w-3" /> Edit
-                  </button>
-                  <button className="flex-1 flex justify-center items-center gap-1 bg-parrys-cream border border-parrys-surface-dim text-parrys-charcoal text-[10px] font-bold uppercase py-1.5 rounded hover:bg-white hover:border-parrys-terracotta transition cursor-pointer">
-                    <FiCopy className="h-3 w-3" /> Duplicate
-                  </button>
-                  <button className="flex justify-center items-center bg-rose-50 border border-rose-100 text-rose-500 text-[10px] py-1.5 px-3 rounded hover:bg-rose-500 hover:text-white transition cursor-pointer">
-                    <FiTrash2 className="h-3.5 w-3.5" />
-                  </button>
-                </div>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
+          )}
         </>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
@@ -267,7 +269,7 @@ export const Products: React.FC = () => {
                   <p className="text-[10px] font-medium text-parrys-muted">{cat.products} Active Products</p>
                 </div>
               </div>
-              
+
               <div className="pt-3 mt-1 border-t border-parrys-surface-dim/60 flex justify-between items-center">
                 <span className={`text-xs px-2 py-0.5 rounded font-bold uppercase tracking-wider border
                   ${cat.status === 'Approved' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'}
@@ -312,6 +314,23 @@ export const Products: React.FC = () => {
                   />
                 </div>
 
+                <div className="flex flex-col gap-1">
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-parrys-muted">Category</label>
+                  <select
+                    required
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                    className="w-full rounded border border-parrys-surface-dim bg-white px-3 py-2 text-xs text-parrys-charcoal focus:border-parrys-terracotta focus:outline-none focus:ring-1 focus:ring-parrys-terracotta/20 transition cursor-pointer"
+                  >
+                    <option value="" disabled>Select a category</option>
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.name}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
                 <div className="grid grid-cols-2 gap-3">
                   <div className="flex flex-col gap-1">
                     <label className="text-[10px] font-bold uppercase tracking-wider text-parrys-muted">Base Price per unit (₹)</label>
@@ -336,7 +355,7 @@ export const Products: React.FC = () => {
                       className="w-full rounded border border-parrys-surface-dim bg-white px-3 py-2 text-xs text-parrys-charcoal focus:border-parrys-terracotta focus:outline-none focus:ring-1 focus:ring-parrys-terracotta/20 transition"
                     />
                   </div>
-                  
+
                   <div className="flex flex-col gap-1">
                     <label className="text-[10px] font-bold uppercase tracking-wider text-parrys-muted">Unit Measure</label>
                     <select
@@ -351,7 +370,7 @@ export const Products: React.FC = () => {
                       <option value="brass">Brass / Volume</option>
                     </select>
                   </div>
-                  
+
                   <div className="flex flex-col gap-1">
                     <label className="text-[10px] font-bold uppercase tracking-wider text-parrys-muted">Min Order Qty</label>
                     <input
