@@ -14,6 +14,7 @@ import { Contact } from '../pages/public/Contact';
 import { Brands } from '../pages/public/Brands';
 import { Login } from '../pages/public/Login';
 import { VendorRegistration } from '../pages/public/VendorRegistration';
+import { VendorOnboardingStandalone } from '../pages/public/VendorOnboardingStandalone';
 import { Cart } from '../pages/public/Cart';
 import { Profile as CustomerProfile } from '../pages/public/Profile';
 import { HowItWorks } from '../pages/public/HowItWorks';
@@ -38,6 +39,7 @@ import { Settings as VendorSettings } from '../pages/vendor/Settings';
 import { AdminLogin } from '../pages/admin/Login';
 import { Dashboard as AdminDashboard } from '../pages/admin/Dashboard';
 import { Vendors as AdminVendors } from '../pages/admin/Vendors';
+import { VendorOnboarding as AdminVendorOnboarding } from '../pages/admin/VendorOnboarding';
 import { Products as AdminProducts } from '../pages/admin/Products';
 import { Categories as AdminCategories } from '../pages/admin/Categories';
 import { Reports as AdminReports } from '../pages/admin/Reports';
@@ -46,6 +48,9 @@ import { Inventory as AdminInventory } from '../pages/admin/Inventory';
 export const AppRoutes: React.FC = () => {
   return (
     <Routes>
+      {/* Standalone Vendor Onboarding Form Route */}
+      <Route path="/vendor-onboarding" element={<VendorOnboardingStandalone />} />
+
       {/* Public storefront routes */}
 <Route element={<PublicLayout />}>
   <Route path="/" element={<Home />} />
@@ -75,7 +80,6 @@ export const AppRoutes: React.FC = () => {
   <Route path="/vendor/notifications" element={<VendorNotifications />} />
   <Route path="/vendor/settings" element={<VendorSettings />} />
 </Route>
-
 {/* Admin Operations routes */ }
 <Route path="/admin-login" element={<AdminLogin />} />
 <Route
@@ -88,6 +92,7 @@ export const AppRoutes: React.FC = () => {
   }
 >
   <Route path="/admin" element={<AdminDashboard />} />
+  <Route path="/admin/vendor-onboarding" element={<AdminVendorOnboarding />} />
   <Route path="/admin/vendors" element={<AdminVendors />} />
   <Route path="/admin/products" element={<AdminProducts viewState="data" setViewState={() => { }} />} />
   <Route path="/admin/inventory" element={<AdminInventory />} />
