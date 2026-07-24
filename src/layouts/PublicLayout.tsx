@@ -2,16 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   FiMenu, FiX, FiUser, FiShoppingCart, FiSearch,
-  FiTrash2, FiPlus, FiMinus, FiMapPin, FiMail, FiPhone, FiClock, FiCheckCircle
+  FiMapPin, FiMail, FiPhone, FiClock
 } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
-import { mockDbService } from '../services/mockDbService';
-import { AnimatePresence, motion } from 'framer-motion';
 import { Logo } from '../components/common/Logo';
 
 export const PublicLayout: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [cartOpen, setCartOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
   const [currentUser, setCurrentUser] = useState<{ name: string; email: string; companyName?: string } | null>(null);
@@ -51,12 +48,6 @@ export const PublicLayout: React.FC = () => {
     { name: 'Contact', path: '/contact' }
   ];
 
-  const chennaiAreas = [
-    'Adyar', 'Ambattur', 'Anna Nagar', 'Chromepet', 'Guindy', 'Kanchipuram',
-    'Madhavaram', 'Mylapore', 'Nungambakkam', 'Ponniammanmedu', 'Porur',
-    'Red Hills', 'Royapettah', 'Saidapet', 'Sriperumbudur', 'T. Nagar',
-    'Tambaram', 'Thiruvanmiyur', 'Vandalur', 'Velachery'
-  ];
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
