@@ -10,22 +10,27 @@ export const Logo: React.FC<LogoProps> = ({ className = '', size = 32 }) => {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 100 120"
+      viewBox="0 0 100 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      {/* House Roof Top */}
-      <path
-        d="M15 42 L50 18 L68 29.5 L68 15 L74 15 L74 33.3 L85 42 L77 46 L50 28.5 L23 46 Z"
-        fill="currentColor"
+      {/* Top Part of E */}
+      <path 
+        d="M 32 15 L 75 15 L 71 32 L 42 32 C 34 32 29 36 25 47 L 32 15 Z" 
+        fill="currentColor" 
       />
-      {/* Stylized Hexagonal Mirrored S with Door/Window Slots */}
-      <path
-        d="M75 58 L50 40 L25 58 L25 74 L50 92 L25 92 L25 102 L50 120 L75 102 L75 86 L50 68 L75 68 Z M46 68 L46 50 L54 50 L54 68 Z M46 92 L54 92 L54 110 L46 110 Z"
-        fill="currentColor"
-        fillRule="evenodd"
-        clipRule="evenodd"
+      
+      {/* Arrow (Middle Part of E) */}
+      <path 
+        d="M 16 85 C 24 55 38 43 65 43 L 65 25 L 95 50 L 65 75 L 65 58 C 45 58 30 67 16 85 Z" 
+        fill="currentColor" 
+      />
+      
+      {/* Bottom Part of E */}
+      <path 
+        d="M 28 85 C 36 74 46 64 62 64 L 71 64 L 66 85 L 28 85 Z" 
+        fill="currentColor" 
       />
     </svg>
   );
