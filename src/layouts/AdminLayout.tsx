@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   FiGrid, FiUsers, FiCheckSquare, FiFolder,
   FiPieChart, FiArrowLeft, FiMenu, FiBox,
-  FiChevronDown, FiRefreshCw, FiLogOut
+  FiChevronDown, FiRefreshCw, FiLogOut, FiUserCheck
 } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -43,6 +43,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
   const menuItems = [
     { name: 'Admin Dashboard', icon: FiGrid, path: '/admin' },
+    { name: 'Vendor Onboarding', icon: FiUserCheck, path: '/admin/vendor-onboarding' },
     { name: 'Vendor Ledger', icon: FiUsers, path: '/admin/vendors' },
     { name: 'Product Approvals', icon: FiCheckSquare, path: '/admin/products' },
     { name: 'Global Inventory', icon: FiBox, path: '/admin/inventory' },

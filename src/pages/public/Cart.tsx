@@ -16,8 +16,6 @@ import {
   FiArrowLeft,
   FiDownload,
   FiCheck,
-  FiChevronDown,
-  FiChevronUp,
   FiBriefcase,
   FiTag,
   FiPercent,
@@ -135,7 +133,7 @@ export const Cart: React.FC = () => {
   const totalProposalAmount = discountedSubtotal + estimatedGst + freightFee + unloadingFee;
 
   // Complete Order Creation Handler
-  const finalizeOrderPlacement = (payId?: string, mode?: string) => {
+  const finalizeOrderPlacement = (payId?: string, _mode?: string) => {
     if (cartItems.length === 0) return;
 
     const randomRef = `EP-${Math.floor(100000 + Math.random() * 900000)}`;

@@ -287,7 +287,6 @@ export const VendorRegistration: React.FC = () => {
     // Document uploads
     if (!gstCert) tempErrors.gstCert = 'GST Certificate is required';
     if (!regCert) tempErrors.regCert = 'Business Registration Certificate is required';
-    if (!companyLogo) tempErrors.companyLogo = 'Company Logo is required';
 
     if (!vendTerms) {
       tempErrors.vendTerms = 'You must accept the terms & conditions';
@@ -1011,14 +1010,11 @@ export const VendorRegistration: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <FileUploadField
-                  label="Corporate Logo File *"
-                  required
+                  label="Corporate Logo File (Optional)"
                   fileName={companyLogo ? companyLogo.name : null}
                   onChange={(file) => {
                     setCompanyLogo(file);
-                    if (errors.companyLogo) setErrors(prev => ({ ...prev, companyLogo: '' }));
                   }}
-                  error={errors.companyLogo}
                 />
 
                 <FileUploadField
