@@ -4,7 +4,7 @@ import {
   FiGrid, FiShoppingBag, FiPackage, FiList, 
   FiUser, FiArrowLeft, FiMenu, FiBell, 
   FiChevronDown, FiLogOut, FiSettings,
-  FiTag, FiMessageSquare, FiPieChart
+  FiMessageSquare, FiPieChart
 } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 
